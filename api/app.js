@@ -4,6 +4,9 @@ import path from "path";
 import catchError from "./Utils/catchError.js";
 import HandleERROR from "./Utils/handleError.js";
 import cors from "cors";
+import uploadRouter from './Routes/Upload.js'
+import { isLogin } from "./Middlewares/isLogin.js";
+import addressRouter from "./Routes/Address.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static("Public"));
+app.use('/api/address',isLogin,addressRouter)
 
 app.use('/api/upload',uploadRouter)
 
