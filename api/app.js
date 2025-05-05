@@ -18,6 +18,7 @@ import brandRouter from "./Routes/Brand.js";
 import discountRouter from "./Routes/DiscountCode.js";
 import searchRouter from "./Routes/Search.js";
 import cartRouter from "./Routes/Cart.js";
+import authRouter from "./Routes/Auth.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,6 +27,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static("Public"));
+app.use('/api/auth',authRouter)
 app.use('/api/address',isLogin,addressRouter)
 app.use('/api/user',userRouter)
 app.use('/api/slider',sliderRouter)
