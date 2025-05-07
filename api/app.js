@@ -19,6 +19,7 @@ import discountRouter from "./Routes/DiscountCode.js";
 import searchRouter from "./Routes/Search.js";
 import cartRouter from "./Routes/Cart.js";
 import authRouter from "./Routes/Auth.js";
+import reportRouter from "./Routes/Report.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -40,6 +41,7 @@ app.use('/api/brand',brandRouter)
 app.use('/api/discount',discountRouter)
 app.use('/api/search',searchRouter)
 app.use('/api/cart',isLogin,cartRouter)
+app.use('/api/report', reportRouter);
 app.use('/api/upload',uploadRouter)
 
 app.use("*", (req, res, next) => {
