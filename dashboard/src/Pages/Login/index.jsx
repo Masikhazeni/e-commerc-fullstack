@@ -9,25 +9,29 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [fields, handleChange] = useFormFields();
   const [errors, setErrors] = useState({});
-    const {token}=useSelector(state=>state.auth)
+  const {token} = useSelector(state => state.auth);
+  
   const validate = () => {
     const newErrors = {};
     if (!/^(\+\d{1,3})?\d{10,14}$/.test(fields.phoneNumber || "")) {
-      newErrors.phoneNumber = "Invalid phone number (e.g., +989123456789)";
+      newErrors.phoneNumber = "شماره موبایل معتبر نیست (مثال: 09123456789)";
     }
     if (!/^.{6,}$/.test(fields.password || "")) {
-      newErrors.password = "Password must be at least 6 characters long";
+      newErrors.password = "رمز عبور باید حداقل 6 کاراکتر باشد";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const dispatch = useDispatch();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (token) {
       navigate("/");
     }
   }, [token, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
@@ -38,11 +42,11 @@ const Login = () => {
         },
         body: JSON.stringify(fields),
       });
+      
       if (res.success) {
-        console.log(res)
         notify(res.message, "success");
         dispatch(login({ user: res.data.user, token: res.data.token }));
-        navigate('/')
+        navigate('/');
       } else {
         notify(res.message, "error");
       }
@@ -50,19 +54,20 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-900">
+    <div className="flex justify-center items-center h-screen bg-gray-900" style={{ direction: 'rtl' }}>
       <div className="w-96 bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
         <h2 className="text-white text-2xl font-semibold text-center mb-6">
-          Login
+          ورود به پنل مدیریت
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-300 mb-1">Phone Number</label>
+            <label className="block text-gray-300 mb-1">شماره موبایل</label>
             <input
               type="text"
               name="phoneNumber"
               value={fields.phoneNumber || ""}
               onChange={handleChange}
+              placeholder="09xxxxxxxxx"
               className={`w-full p-3 rounded-lg bg-gray-700 text-white border-2 ${
                 errors.phoneNumber ? "border-red-500" : "border-gray-600"
               } focus:outline-none focus:border-blue-500`}
@@ -73,7 +78,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block text-gray-300 mb-1">Password</label>
+            <label className="block text-gray-300 mb-1">رمز عبور</label>
             <input
               type="password"
               name="password"
@@ -92,7 +97,7 @@ const Login = () => {
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold transition-all duration-300"
           >
-            Login
+            ورود
           </button>
         </form>
       </div>
