@@ -1,18 +1,14 @@
 import mongoose from "mongoose";
-
-const variantSchema = new mongoose.Schema(
-  {
-    color: {
-      type: String,
-      required: true
+const variantSchema=new mongoose.Schema({
+    type:{
+        type:String,
+        enum:['size','color'],
+        required:[true,'type is required']
     },
-    size: {
-      type: String,
-      required: true
+    value:{
+        type:String,
+        required:[true,'value is required']
     }
-  },
-  { timestamps: true }
-);
-
-const Variant = mongoose.model('Variant', variantSchema);
-export default Variant;
+},{timestamps:true})
+const Variant=mongoose.model('Variant',variantSchema)
+export default Variant
