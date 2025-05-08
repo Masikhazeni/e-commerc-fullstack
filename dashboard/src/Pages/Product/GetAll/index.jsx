@@ -54,30 +54,30 @@ const GetAllProduct = () => {
   if (error) {
     return (
       <div className="p-4 bg-red-100 text-red-700 rounded-md mx-4 my-2">
-        Error: {error}
+        خطا: {error}
       </div>
     );
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">All Products</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">همه محصولات</h1>
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Title
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  عنوان
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Category
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  دسته‌بندی
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Brand
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  برند
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Created At
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  تاریخ ایجاد
                 </th>
               </tr>
             </thead>
@@ -88,15 +88,15 @@ const GetAllProduct = () => {
                   onClick={() => navigate(`update/${product._id}`)}
                   className="hover:bg-gray-50 transition-colors cursor-pointer"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">{product.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap text-right">{product.title}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
                     {product.categoryId?.name || "-"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
                     {product.brandId?.name || "-"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(product.createdAt).toLocaleDateString()}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
+                    {new Date(product.createdAt).toLocaleDateString('fa-IR')}
                   </td>
                 </tr>
               ))}
@@ -104,7 +104,7 @@ const GetAllProduct = () => {
           </table>
         </div>
 
-        {/* Pagination Controls */}
+        {/* کنترل‌های صفحه‌بندی */}
         <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
           <div className="flex-1 flex justify-between sm:hidden">
             <button
@@ -112,32 +112,32 @@ const GetAllProduct = () => {
               disabled={currentPage === 1}
               className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
             >
-              Previous
+              قبلی
             </button>
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
               className="ml-3 inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
             >
-              Next
+              بعدی
             </button>
           </div>
           
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <p className="text-sm text-gray-700">
-                Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to{" "}
-                <span className="font-medium">{Math.min(currentPage * itemsPerPage, totalCount)}</span> of{" "}
-                <span className="font-medium">{totalCount}</span> results
+                نمایش <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> تا{" "}
+                <span className="font-medium">{Math.min(currentPage * itemsPerPage, totalCount)}</span> از{" "}
+                <span className="font-medium">{totalCount}</span> نتیجه
               </p>
               <select
                 value={itemsPerPage}
                 onChange={handleItemsPerPageChange}
                 className="border rounded-md px-2 py-1 text-sm"
               >
-                <option value={10}>10 per page</option>
-                <option value={20}>20 per page</option>
-                <option value={50}>50 per page</option>
+                <option value={10}>10 مورد در صفحه</option>
+                <option value={20}>20 مورد در صفحه</option>
+                <option value={50}>50 مورد در صفحه</option>
               </select>
             </div>
             
@@ -147,17 +147,17 @@ const GetAllProduct = () => {
                 disabled={currentPage === 1}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                Previous
+                قبلی
               </button>
               <span className="px-4 py-2 text-sm text-gray-700">
-                Page {currentPage} of {totalPages}
+                صفحه {currentPage} از {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                Next
+                بعدی
               </button>
             </div>
           </div>
@@ -166,7 +166,7 @@ const GetAllProduct = () => {
 
       {products.length === 0 && !loading && (
         <div className="text-center text-gray-500 mt-8">
-          No products found
+          محصولی یافت نشد
         </div>
       )}
     </div>

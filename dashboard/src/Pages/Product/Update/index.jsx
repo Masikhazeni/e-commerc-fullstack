@@ -22,7 +22,7 @@ const UpdateProduct = () => {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
 
-  // Fetch categories and brands
+  // دریافت دسته‌بندی‌ها و برندها
   useEffect(() => {
     (async () => {
       try {
@@ -41,12 +41,12 @@ const UpdateProduct = () => {
           setBrands(brandResponse.data);
         }
       } catch (err) {
-        notify("Error fetching categories or brands", "error");
+        notify("خطا در دریافت دسته‌بندی‌ها یا برندها", "error");
       }
     })();
   }, [token]);
 
-  // Fetch product details
+  // دریافت اطلاعات محصول
   useEffect(() => {
     (async () => {
       try {
@@ -59,11 +59,11 @@ const UpdateProduct = () => {
           setImages(response.data.imagesUrl || []);
           setInformation(response.data.information || []);
         } else {
-          notify("Product not found!", "error");
+          notify("محصول یافت نشد!", "error");
           navigate("/product");
         }
       } catch (err) {
-        notify("Error fetching product details", "error");
+        notify("خطا در دریافت اطلاعات محصول", "error");
       }
     })();
   }, [id, token, navigate]);
@@ -82,13 +82,13 @@ const UpdateProduct = () => {
     });
 
     if (!response.success) {
-      notify("Image upload failed!", "error");
+      notify("آپلود تصویر ناموفق بود!", "error");
       setUploading(false);
       return;
     }
     
     setImages((prev) => [...prev, response.file.filename]);
-    notify("Image uploaded successfully!", "success");
+    notify("تصویر با موفقیت آپلود شد!", "success");
     setUploading(false);
   };
 
@@ -100,7 +100,7 @@ const UpdateProduct = () => {
     }
   };
 
-  // Merge any changes with the original product data on submit
+  // ارسال اطلاعات ویرایش شده
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -120,19 +120,19 @@ const UpdateProduct = () => {
         body: JSON.stringify(payload),
       });
       if (response.success) {
-        notify("Product updated successfully", "success");
+        notify("محصول با موفقیت به‌روزرسانی شد", "success");
         navigate("/product");
       } else {
         notify(response.message, "error");
       }
     } catch (err) {
-      notify("Error updating product", "error");
+      notify("خطا در به‌روزرسانی محصول", "error");
     } finally {
       setLoading(false);
     }
   };
 
-  // Helper to get current field value
+  // دریافت مقدار فعلی فیلدها
   const getFieldValue = (name) => {
     if (fields[name] !== undefined) return fields[name];
     if (initialData && initialData[name] !== undefined) return initialData[name];
@@ -141,72 +141,72 @@ const UpdateProduct = () => {
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Update Product</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">ویرایش محصول</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title Field */}
+        {/* فیلد عنوان */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">عنوان *</label>
           <input
             name="title"
             value={getFieldValue("title")}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter product title"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-right"
+            placeholder="عنوان محصول را وارد کنید"
             required
           />
         </div>
 
-        {/* Description Field */}
+        {/* فیلد توضیحات */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات *</label>
           <textarea
             name="description"
             value={getFieldValue("description")}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter product description"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-right"
+            placeholder="توضیحات محصول را وارد کنید"
             required
           ></textarea>
         </div>
 
-        {/* Category Selection */}
+        {/* انتخاب دسته‌بندی */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">دسته‌بندی *</label>
           <select
             name="categoryId"
             value={initialData?.categoryId?._id}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-right"
             required
           >
-            <option value="">Select a category</option>
+            <option value="">انتخاب دسته‌بندی</option>
             {categories.map((cat) => (
               <option key={cat._id} value={cat._id}>{cat.name}</option>
             ))}
           </select>
         </div>
 
-        {/* Brand Selection */}
+        {/* انتخاب برند */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Brand *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">برند *</label>
           <select
             name="brandId"
             value={initialData?.brandId?._id}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-right"
             required
           >
-            <option value="">Select a brand</option>
+            <option value="">انتخاب برند</option>
             {brands.map((brand) => (
               <option key={brand._id} value={brand._id}>{brand.name}</option>
             ))}
           </select>
         </div>
 
-        {/* Image Upload */}
+        {/* آپلود تصویر */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="images">
-            Upload Image
+            آپلود تصویر
           </label>
           <input
             type="file"
@@ -218,13 +218,13 @@ const UpdateProduct = () => {
           />
           {images.length > 0 && (
             <div className="mt-2">
-              <p className="text-sm font-medium text-gray-700">Uploaded Images:</p>
+              <p className="text-sm font-medium text-gray-700">تصاویر آپلود شده:</p>
               <div className="flex space-x-2 mt-1">
                 {images.map((img, idx) => (
                   <img
                     key={idx}
                     src={import.meta.env.VITE_BASE_FILE + img}
-                    alt={`Uploaded ${idx}`}
+                    alt={`تصویر ${idx}`}
                     className="w-20 h-20 object-cover rounded"
                   />
                 ))}
@@ -233,36 +233,36 @@ const UpdateProduct = () => {
           )}
         </div>
 
-        {/* Additional Information */}
+        {/* اطلاعات اضافی */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Additional Information</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">اطلاعات تکمیلی</label>
           <div className="flex gap-2 mb-2">
             <input
               type="text"
-              placeholder="Key"
+              placeholder="کلید"
               value={infoKey}
               onChange={(e) => setInfoKey(e.target.value)}
-              className="w-1/3 px-3 py-2 border border-gray-300 rounded-md"
+              className="w-1/3 px-3 py-2 border border-gray-300 rounded-md text-right"
             />
             <input
               type="text"
-              placeholder="Value"
+              placeholder="مقدار"
               value={infoValue}
               onChange={(e) => setInfoValue(e.target.value)}
-              className="w-1/3 px-3 py-2 border border-gray-300 rounded-md"
+              className="w-1/3 px-3 py-2 border border-gray-300 rounded-md text-right"
             />
             <button 
               type="button"
               onClick={handleAddInformation}
               className="px-3 py-2 bg-green-500 text-white rounded-md"
             >
-              Add
+              افزودن
             </button>
           </div>
           {information.length > 0 && (
-            <ul className="list-disc pl-5">
+            <ul className="list-disc pr-5">
               {information.map((info, idx) => (
-                <li key={idx} className="text-sm text-gray-700">
+                <li key={idx} className="text-sm text-gray-700 text-right">
                   {info.key}: {info.value}
                 </li>
               ))}
@@ -275,7 +275,7 @@ const UpdateProduct = () => {
           disabled={loading}
           className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
         >
-          {loading ? "Updating..." : "Update Product"}
+          {loading ? "در حال به‌روزرسانی..." : "ذخیره تغییرات"}
         </button>
       </form>
     </div>
