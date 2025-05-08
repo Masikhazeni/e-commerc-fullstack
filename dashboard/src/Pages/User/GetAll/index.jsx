@@ -9,7 +9,7 @@ const GetAllUsers = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [sortOption, setSortOption] = useState(""); // Example: "username" or "-username"
+  const [sortOption, setSortOption] = useState("");
   const { token } = useSelector((state) => state.auth);
   const [totalCount, setTotalCount] = useState(0);
   const navigate = useNavigate();
@@ -63,20 +63,20 @@ const GetAllUsers = () => {
 
   if (error) {
     return (
-      <div className="p-4 bg-red-100 text-red-700 rounded-md mx-4 my-2">
-        Error: {error}
+      <div className="p-4 bg-red-100 text-red-700 rounded-md mx-4 my-2" dir="rtl">
+        خطا: {error}
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">All Users</h1>
+    <div className="container mx-auto px-4 py-8" dir="rtl">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">لیست کاربران</h1>
 
       {/* Sort & Filter Controls */}
       <div className="mb-4 flex gap-4 items-center">
         <label htmlFor="sort" className="text-sm font-medium text-gray-700">
-          Sort by:
+          مرتب‌سازی بر اساس:
         </label>
         <select
           id="sort"
@@ -84,13 +84,13 @@ const GetAllUsers = () => {
           onChange={handleSortChange}
           className="border rounded-md px-3 py-1 text-sm"
         >
-          <option value="">None</option>
-          <option value="username">Username (A-Z)</option>
-          <option value="-username">Username (Z-A)</option>
-          <option value="fullname">Full Name (A-Z)</option>
-          <option value="-fullname">Full Name (Z-A)</option>
-          <option value="createdAt">Created At (Oldest)</option>
-          <option value="-createdAt">Created At (Newest)</option>
+          <option value="">هیچ‌کدام</option>
+          <option value="username">نام کاربری (صعودی)</option>
+          <option value="-username">نام کاربری (نزولی)</option>
+          <option value="fullname">نام کامل (صعودی)</option>
+          <option value="-fullname">نام کامل (نزولی)</option>
+          <option value="createdAt">تاریخ ساخت (قدیمی‌تر)</option>
+          <option value="-createdAt">تاریخ ساخت (جدیدتر)</option>
         </select>
       </div>
 
@@ -99,20 +99,20 @@ const GetAllUsers = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Full Name
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  نام کامل
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Username
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  نام کاربری
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Phone Number
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  شماره تماس
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Role
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  نقش
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Created At
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  تاریخ ساخت
                 </th>
               </tr>
             </thead>
@@ -123,18 +123,20 @@ const GetAllUsers = () => {
                   onClick={() => navigate(`update/${user._id}`)}
                   className="hover:bg-gray-50 transition-colors cursor-pointer"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
                     {user.fullname || "-"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
                     {user.username || "-"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
                     {user.phoneNumber}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
+                    {user.role}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
+                    {new Date(user.createdAt).toLocaleDateString("fa-IR")}
                   </td>
                 </tr>
               ))}
@@ -147,24 +149,24 @@ const GetAllUsers = () => {
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <p className="text-sm text-gray-700">
-                Showing{" "}
+                نمایش{" "}
                 <span className="font-medium">
                   {(currentPage - 1) * itemsPerPage + 1}
                 </span>{" "}
-                to{" "}
+                تا{" "}
                 <span className="font-medium">
                   {Math.min(currentPage * itemsPerPage, totalCount)}
                 </span>{" "}
-                of <span className="font-medium">{totalCount}</span> results
+                از <span className="font-medium">{totalCount}</span> نتیجه
               </p>
               <select
                 value={itemsPerPage}
                 onChange={handleItemsPerPageChange}
                 className="border rounded-md px-2 py-1 text-sm"
               >
-                <option value={10}>10 per page</option>
-                <option value={20}>20 per page</option>
-                <option value={50}>50 per page</option>
+                <option value={10}>۱۰ مورد در هر صفحه</option>
+                <option value={20}>۲۰ مورد</option>
+                <option value={50}>۵۰ مورد</option>
               </select>
             </div>
 
@@ -174,10 +176,10 @@ const GetAllUsers = () => {
                 disabled={currentPage === 1}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                Previous
+                قبلی
               </button>
               <span className="px-4 py-2 text-sm text-gray-700">
-                Page {currentPage} of {totalPages}
+                صفحه {currentPage} از {totalPages}
               </span>
               <button
                 onClick={() =>
@@ -186,7 +188,7 @@ const GetAllUsers = () => {
                 disabled={currentPage === totalPages}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                Next
+                بعدی
               </button>
             </div>
           </div>
@@ -194,7 +196,7 @@ const GetAllUsers = () => {
       </div>
 
       {users.length === 0 && !loading && (
-        <div className="text-center text-gray-500 mt-8">No users found</div>
+        <div className="text-center text-gray-500 mt-8">هیچ کاربری پیدا نشد</div>
       )}
     </div>
   );

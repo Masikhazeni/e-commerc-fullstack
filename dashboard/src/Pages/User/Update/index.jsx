@@ -10,13 +10,11 @@ const UpdateUser = () => {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  // useFormFields returns only the changed fields.
   const [fields, handleChange] = useFormFields();
   const [initialData, setInitialData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch user details based on id.
   useEffect(() => {
     (async () => {
       try {
@@ -29,11 +27,11 @@ const UpdateUser = () => {
         if (response.success) {
           setInitialData(response.data);
         } else {
-          notify("User not found!", "error");
+          notify("کاربر پیدا نشد!", "error");
           navigate("/user");
         }
       } catch (err) {
-        setError(err.response?.message || "Error fetching user details");
+        setError(err.response?.message || "خطا در دریافت اطلاعات کاربر");
       }
     })();
   }, [id, token, navigate]);
@@ -43,8 +41,8 @@ const UpdateUser = () => {
     try {
       setLoading(true);
       const payload = {
-        ...initialData, // original values
-        ...fields, // any changes from the form
+        ...initialData,
+        ...fields,
       };
       const response = await fetchData(`user/${id}`, {
         method: "PATCH",
@@ -61,13 +59,12 @@ const UpdateUser = () => {
         notify(response.message, "error");
       }
     } catch (err) {
-      setError(err.response?.message || "Error updating user");
+      setError(err.response?.message || "خطا در بروزرسانی اطلاعات");
     } finally {
       setLoading(false);
     }
   };
 
-  // Helper to get the field value from either the changed fields or the initial data.
   const getFieldValue = (name) => {
     if (fields[name] !== undefined) return fields[name];
     if (initialData && initialData[name] !== undefined) return initialData[name];
@@ -75,8 +72,8 @@ const UpdateUser = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Update User</h2>
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md text-right font-sans" dir="rtl">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">ویرایش کاربر</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="p-3 bg-red-100 text-red-700 rounded-md">{error}</div>
@@ -84,46 +81,46 @@ const UpdateUser = () => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Full Name
+            نام و نام خانوادگی
           </label>
           <input
             name="fullname"
             value={getFieldValue("fullname")}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter full name"
+            placeholder="مثلاً علی رضایی"
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Username
+            نام کاربری
           </label>
           <input
             name="username"
             value={getFieldValue("username")}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter username"
+            placeholder="مثلاً alireza"
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Phone Number *
+            شماره موبایل <span className="text-red-500">*</span>
           </label>
           <input
             name="phoneNumber"
             value={getFieldValue("phoneNumber")}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter phone number"
+            placeholder="مثلاً 09123456789"
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Role
+            نقش کاربر
           </label>
           <select
             name="role"
@@ -131,8 +128,8 @@ const UpdateUser = () => {
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
           >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
+            <option value="user">کاربر</option>
+            <option value="admin">مدیر</option>
           </select>
         </div>
 
@@ -148,7 +145,7 @@ const UpdateUser = () => {
             }
             className="h-4 w-4 text-blue-600 border-gray-300 rounded"
           />
-          <label className="ml-2 text-sm text-gray-700">Profile Complete</label>
+          <label className="mr-2 text-sm text-gray-700">پروفایل کامل شده</label>
         </div>
 
         <button
@@ -156,7 +153,7 @@ const UpdateUser = () => {
           disabled={loading}
           className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
         >
-          {loading ? "Updating..." : "Update User"}
+          {loading ? "در حال بروزرسانی..." : "ذخیره تغییرات"}
         </button>
       </form>
     </div>
@@ -164,3 +161,4 @@ const UpdateUser = () => {
 };
 
 export default UpdateUser;
+
