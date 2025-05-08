@@ -10,7 +10,6 @@ const UpdateBrand = () => {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  // useFormFields returns only changed fields.
   const [fields, handleChange] = useFormFields();
   const [initialData, setInitialData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -18,7 +17,6 @@ const UpdateBrand = () => {
   const [error, setError] = useState("");
   const [image, setImage] = useState(null);
 
-  // Fetch the brand details based on id.
   useEffect(() => {
     (async () => {
       try {
@@ -32,11 +30,11 @@ const UpdateBrand = () => {
           setInitialData(response.data);
           setImage(response.data.image || null);
         } else {
-          notify("Brand not found!", "error");
+          notify("برند یافت نشد!", "error");
           navigate("/brand");
         }
       } catch (err) {
-        setError(err.response?.message || "Error fetching brand details");
+        setError(err.response?.message || "خطا در دریافت اطلاعات برند");
       }
     })();
   }, [id, token, navigate]);
@@ -57,16 +55,15 @@ const UpdateBrand = () => {
     });
 
     if (!response.success) {
-      notify("Image upload failed!", "error");
+      notify("آپلود تصویر ناموفق بود!", "error");
       setUploading(false);
       return;
     }
     setImage(response.file.filename);
-    notify("Image uploaded successfully!", "success");
+    notify("تصویر با موفقیت آپلود شد!", "success");
     setUploading(false);
   };
 
-  // Optionally, you can add a function to remove the image if needed.
   const handleRemoveImage = async () => {
     const response = await fetchData("upload", {
       method: "DELETE",
@@ -78,7 +75,7 @@ const UpdateBrand = () => {
     });
     if (response?.success) {
       setImage(null);
-      notify("Image removed.", "success");
+      notify("تصویر حذف شد.", "success");
     }
   };
 
@@ -87,9 +84,9 @@ const UpdateBrand = () => {
     try {
       setLoading(true);
       const payload = {
-        ...initialData, // original values
-        ...fields, // updated fields
-        image, // current image state
+        ...initialData,
+        ...fields,
+        image,
       };
       const response = await fetchData(`brand/${id}`, {
         method: "PATCH",
@@ -106,14 +103,14 @@ const UpdateBrand = () => {
         notify(response.message, "error");
       }
     } catch (err) {
-      setError(err.response?.message || "Error updating brand");
+      setError(err.response?.message || "خطا در بروزرسانی برند");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this brand?")) return;
+    if (!window.confirm("آیا از حذف این برند اطمینان دارید؟")) return;
     try {
       setLoading(true);
       const response = await fetchData(`brand/${id}`, {
@@ -129,7 +126,7 @@ const UpdateBrand = () => {
         notify(response.message, "error");
       }
     } catch (err) {
-      setError(err.response?.message || "Error deleting brand");
+      setError(err.response?.message || "خطا در حذف برند");
     } finally {
       setLoading(false);
     }
@@ -142,75 +139,87 @@ const UpdateBrand = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Update Brand</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {error && (
-          <div className="p-3 bg-red-100 text-red-700 rounded-md">{error}</div>
-        )}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Brand Name *
-          </label>
-          <input
-            name="name"
-            value={getFieldValue("name")}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter brand name"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Brand Image *
-          </label>
-          <input
-            type="file"
-            name="image"
-            onChange={handleImageUpload}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-            disabled={uploading}
-          />
-          {image && (
-            <div className="mt-2">
-              <p className="text-sm font-medium text-gray-700">Uploaded Image:</p>
-              <div className="flex items-center space-x-2">
-                <img
-                  src={import.meta.env.VITE_BASE_FILE + image}
-                  alt="Uploaded"
-                  className="w-20 h-20 object-cover rounded"
-                />
-                <button
-                  type="button"
-                  onClick={handleRemoveImage}
-                  className="px-2 py-1 bg-red-500 text-white rounded-md text-sm"
-                >
-                  Remove Image
-                </button>
-              </div>
-            </div>
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">ویرایش برند</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="p-3 bg-red-100 text-red-700 rounded-md text-right">{error}</div>
           )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1 text-right">
+              نام برند *
+            </label>
+            <input
+              name="name"
+              value={getFieldValue("name")}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-right"
+              placeholder="نام برند را وارد کنید"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1 text-right">
+              تصویر برند *
+            </label>
+            <input
+              type="file"
+              name="image"
+              onChange={handleImageUpload}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-right"
+              disabled={uploading}
+              accept="image/*"
+            />
+            {image && (
+              <div className="mt-2 text-right">
+                <p className="text-sm font-medium text-gray-700">تصویر آپلود شده:</p>
+                <div className="flex flex-col sm:flex-row items-center justify-end gap-2 mt-2">
+                  <img
+                    src={import.meta.env.VITE_BASE_FILE + image}
+                    alt="تصویر آپلود شده"
+                    className="w-20 h-20 object-cover rounded"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="px-3 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600 transition-colors"
+                  >
+                    حذف تصویر
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading || uploading}
+            className={`w-full py-2 px-4 rounded-md transition-colors ${
+              loading || uploading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
+          >
+            {loading ? "در حال بروزرسانی..." : uploading ? "در حال آپلود..." : "بروزرسانی برند"}
+          </button>
+        </form>
+
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={loading}
+            className={`w-full py-2 px-4 rounded-md transition-colors ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-red-600 hover:bg-red-700 text-white"
+            }`}
+          >
+            {loading ? "در حال پردازش..." : "حذف برند"}
+          </button>
         </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
-        >
-          {loading ? "Updating..." : "Update Brand"}
-        </button>
-      </form>
-
-      <div className="mt-4">
-        <button
-          type="button"
-          onClick={handleDelete}
-          disabled={loading}
-          className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors"
-        >
-          {loading ? "Processing..." : "Delete Brand"}
-        </button>
       </div>
     </div>
   );

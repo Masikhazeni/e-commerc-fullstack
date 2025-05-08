@@ -5,16 +5,16 @@ const Address = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-6" style={{ direction: 'rtl' }}>
       <button 
         onClick={() => navigate("create")}
         className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors"
       >
-        Create Address
+        ایجاد آدرس جدید
       </button>
       <Outlet />
     </div>
   );
 };
 
-export default Address; 
+export default Address;

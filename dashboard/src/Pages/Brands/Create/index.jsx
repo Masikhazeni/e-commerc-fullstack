@@ -29,12 +29,12 @@ const CreateBrand = () => {
     });
 
     if (!response.success) {
-      notify("Image upload failed!", "error");
+      notify("آپلود تصویر ناموفق بود!", "error");
       setUploading(false);
       return;
     }
     setImage(response.file.filename);
-    notify("Image uploaded successfully!", "success");
+    notify("تصویر با موفقیت آپلود شد!", "success");
     setUploading(false);
   };
 
@@ -57,59 +57,70 @@ const CreateBrand = () => {
         notify(response.message, "error");
       }
     } catch (err) {
-      notify(err.response?.message || "Error creating brand", "error");
+      notify(err.response?.message || "خطا در ایجاد برند", "error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Create New Brand</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Brand Name *
-          </label>
-          <input
-            name="name"
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter brand name"
-          />
-        </div>
+    <div className="container mx-auto px-4 py-6">
+      <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">ایجاد برند جدید</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1 text-right">
+              نام برند *
+            </label>
+            <input
+              name="name"
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-right"
+              placeholder="نام برند را وارد کنید"
+              required
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Brand Image *
-          </label>
-          <input
-            type="file"
-            name="image"
-            onChange={handleImageUpload}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-            disabled={uploading}
-          />
-          {image && (
-            <div className="mt-2">
-              <p className="text-sm font-medium text-gray-700">Uploaded Image:</p>
-              <img
-                src={import.meta.env.VITE_BASE_FILE + image}
-                alt="Uploaded"
-                className="w-20 h-20 object-cover rounded"
-              />
-            </div>
-          )}
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1 text-right">
+              تصویر برند *
+            </label>
+            <input
+              type="file"
+              name="image"
+              onChange={handleImageUpload}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-right"
+              disabled={uploading}
+              required
+              accept="image/*"
+            />
+            {image && (
+              <div className="mt-2 text-right">
+                <p className="text-sm font-medium text-gray-700">تصویر آپلود شده:</p>
+                <div className="flex justify-end mt-2">
+                  <img
+                    src={import.meta.env.VITE_BASE_FILE + image}
+                    alt="تصویر آپلود شده"
+                    className="w-20 h-20 object-cover rounded"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
-        >
-          {loading ? "Creating..." : "Create Brand"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={loading || uploading || !image}
+            className={`w-full py-2 px-4 rounded-md transition-colors ${
+              loading || uploading || !image
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
+          >
+            {loading ? "در حال ایجاد..." : uploading ? "در حال آپلود..." : "ایجاد برند"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

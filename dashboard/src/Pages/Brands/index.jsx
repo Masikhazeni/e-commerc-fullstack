@@ -1,7 +1,7 @@
-import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import React from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-const Brands = () => {
+const Brand = () => {
   const navigate = useNavigate();
 
   return (
@@ -10,11 +10,11 @@ const Brands = () => {
         onClick={() => navigate("create")}
         className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors"
       >
-        Create Brand
+         ایجاد برند جدید 
       </button>
       <Outlet />
     </div>
   );
 };
 
-export default Brands;
+export default Brand;

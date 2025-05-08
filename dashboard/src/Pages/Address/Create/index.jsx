@@ -8,11 +8,10 @@ import { useNavigate } from "react-router-dom";
 const CreateAddress = () => {
   const [fields, handleChange] = useFormFields();
   const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]); // State to store the list of users
+  const [users, setUsers] = useState([]);
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  // Fetch all users on component mount
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -23,13 +22,12 @@ const CreateAddress = () => {
           },
         });
         if (response.success) {
-          // Assuming response.data is an array of user objects.
           setUsers(response.data);
         } else {
-          notify("Failed to fetch users", "error");
+          notify("خطا در دریافت لیست کاربران", "error");
         }
       } catch (err) {
-        notify("Error fetching users", "error");
+        notify("خطا در ارتباط با سرور", "error");
       }
     };
 
@@ -40,7 +38,6 @@ const CreateAddress = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      // Send the form data along with the selected userId
       const response = await fetchData("address", {
         method: "POST",
         headers: {
@@ -50,124 +47,124 @@ const CreateAddress = () => {
         body: JSON.stringify(fields),
       });
       if (response.success) {
-        notify("Address created successfully", "success");
+        notify("آدرس با موفقیت ایجاد شد", "success");
         navigate("/address");
       } else {
         notify(response.message, "error");
       }
     } catch (err) {
-      notify("Error creating address", "error");
+      notify("خطا در ایجاد آدرس", "error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Create New Address</h2>
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md" style={{ direction: 'rtl' }}>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">ایجاد آدرس جدید</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         
-        {/* City Field */}
+        {/* شهر */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">شهر *</label>
           <input
             name="city"
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter city"
+            placeholder="نام شهر را وارد کنید"
           />
         </div>
 
-        {/* Receiver Name */}
+        {/* نام گیرنده */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Receiver Name *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">نام گیرنده *</label>
           <input
             name="receiverName"
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter receiver's name"
+            placeholder="نام گیرنده را وارد کنید"
           />
         </div>
 
-        {/* Receiver Phone Number */}
+        {/* شماره تماس گیرنده */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Receiver Phone Number *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">شماره تماس گیرنده *</label>
           <input
             name="receiverPhoneNumber"
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter receiver's phone number"
+            placeholder="شماره تماس گیرنده را وارد کنید"
           />
         </div>
 
-        {/* Postal Code */}
+        {/* کد پستی */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Postal Code *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">کد پستی *</label>
           <input
             name="postalCode"
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter postal code"
+            placeholder="کد پستی را وارد کنید"
           />
         </div>
 
-        {/* Street */}
+        {/* خیابان */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Street *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">خیابان *</label>
           <input
             name="street"
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter street name"
+            placeholder="نام خیابان را وارد کنید"
           />
         </div>
 
-        {/* Plaque */}
+        {/* پلاک */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Plaque *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">پلاک *</label>
           <input
             name="plaque"
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter plaque number"
+            placeholder="شماره پلاک را وارد کنید"
           />
         </div>
 
-        {/* Province */}
+        {/* استان */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Province *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">استان *</label>
           <input
             name="province"
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter province"
+            placeholder="نام استان را وارد کنید"
           />
         </div>
 
-        {/* Description */}
+        {/* توضیحات */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات</label>
           <textarea
             name="description"
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter address description (optional)"
+            placeholder="توضیحات اضافه (اختیاری)"
           ></textarea>
         </div>
 
-        {/* Select Box for User */}
+        {/* انتخاب کاربر */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">User *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">کاربر *</label>
           <select
             name="userId"
             value={fields.userId || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
           >
-            <option value="">Select a user</option>
+            <option value="">انتخاب کاربر</option>
             {users.map((user) => (
               <option key={user._id} value={user._id}>
-                {user.name || user.phoneNumber} {/* Adjust this based on your user object (e.g. user.email) */}
+                {user.name || user.phoneNumber}
               </option>
             ))}
           </select>
@@ -178,7 +175,7 @@ const CreateAddress = () => {
           disabled={loading}
           className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
         >
-          {loading ? "Creating..." : "Create Address"}
+          {loading ? "در حال ایجاد..." : "ایجاد آدرس"}
         </button>
       </form>
     </div>

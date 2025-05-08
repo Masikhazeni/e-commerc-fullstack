@@ -13,9 +13,9 @@ const UpdateAddress = () => {
   const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    (async () => {
+    const fetchDataForUpdate = async () => {
       try {
-        // Fetch address data
+        // دریافت اطلاعات آدرس
         const addressResponse = await fetchData(`address/${id}`, {
           method: "GET",
           headers: { authorization: `Bearer ${token}` },
@@ -25,7 +25,7 @@ const UpdateAddress = () => {
           setFields(addressResponse.data);
         }
 
-        // Fetch users list
+        // دریافت لیست کاربران
         const usersResponse = await fetchData("user", {
           method: "GET",
           headers: { authorization: `Bearer ${token}` },
@@ -36,11 +36,11 @@ const UpdateAddress = () => {
         }
       } catch (error) {
         console.log(error)
-        notify("Error fetching data", "error");
+        notify("خطا در دریافت اطلاعات", "error");
       }
-    })()
+    };
 
- 
+    fetchDataForUpdate();
   }, [id, token]);
 
   const handleChange = (e) => {
@@ -62,136 +62,136 @@ const UpdateAddress = () => {
       });
 
       if (response.success) {
-        notify("Address updated successfully", "success");
+        notify("آدرس با موفقیت ویرایش شد", "success");
         navigate("/address");
       } else {
         notify(response.message, "error");
       }
     } catch (err) {
-      notify("Error updating address", "error");
+      notify("خطا در ویرایش آدرس", "error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Update Address</h2>
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md" style={{ direction: 'rtl' }}>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">ویرایش آدرس</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* City Field */}
+        {/* فیلد شهر */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">شهر *</label>
           <input
             name="city"
             value={fields.city || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter city"
+            placeholder="نام شهر را وارد کنید"
             required
           />
         </div>
 
-        {/* Receiver Name */}
+        {/* نام گیرنده */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Receiver Name *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">نام گیرنده *</label>
           <input
             name="receiverName"
             value={fields.receiverName || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter receiver's name"
+            placeholder="نام گیرنده را وارد کنید"
             required
           />
         </div>
 
-        {/* Receiver Phone Number */}
+        {/* شماره تماس گیرنده */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Receiver Phone Number *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">شماره تماس گیرنده *</label>
           <input
             name="receiverPhoneNumber"
             value={fields.receiverPhoneNumber || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter receiver's phone number"
+            placeholder="شماره تماس گیرنده را وارد کنید"
             required
           />
         </div>
 
-        {/* Postal Code */}
+        {/* کد پستی */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Postal Code *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">کد پستی *</label>
           <input
             name="postalCode"
             value={fields.postalCode || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter postal code"
+            placeholder="کد پستی را وارد کنید"
             required
           />
         </div>
 
-        {/* Street */}
+        {/* خیابان */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Street *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">خیابان *</label>
           <input
             name="street"
             value={fields.street || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter street name"
+            placeholder="نام خیابان را وارد کنید"
             required
           />
         </div>
 
-        {/* Plaque */}
+        {/* پلاک */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Plaque *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">پلاک *</label>
           <input
             name="plaque"
             value={fields.plaque || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter plaque number"
+            placeholder="شماره پلاک را وارد کنید"
             required
           />
         </div>
 
-        {/* Province */}
+        {/* استان */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Province *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">استان *</label>
           <input
             name="province"
             value={fields.province || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter province"
+            placeholder="نام استان را وارد کنید"
             required
           />
         </div>
 
-        {/* Description */}
+        {/* توضیحات */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات</label>
           <textarea
             name="description"
             value={fields.description || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter address description (optional)"
+            placeholder="توضیحات اضافه (اختیاری)"
           ></textarea>
         </div>
 
-        {/* User Selection */}
+        {/* انتخاب کاربر */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">User *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">کاربر *</label>
           <select
             name="userId"
-            value={String(fields.userId )|| ""}
+            value={String(fields.userId) || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
             required
           >
-            <option value="">Select a user</option>
+            <option value="">انتخاب کاربر</option>
             {users.map((user) => (
               <option key={user._id} value={String(user._id)}>
                 {user.name || user.email || user.phoneNumber}
@@ -205,7 +205,7 @@ const UpdateAddress = () => {
           disabled={loading}
           className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
         >
-          {loading ? "Updating..." : "Update Address"}
+          {loading ? "در حال ویرایش..." : "ویرایش آدرس"}
         </button>
       </form>
     </div>

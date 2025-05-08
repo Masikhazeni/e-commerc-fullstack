@@ -48,29 +48,29 @@ const GetAllBrands = () => {
 
   if (error) {
     return (
-      <div className="p-4 bg-red-100 text-red-700 rounded-md mx-4 my-2">
-        Error: {error}
+      <div className="p-4 bg-red-100 text-red-700 rounded-md mx-4 my-2 text-right">
+        خطا: {error}
       </div>
     );
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">All Brands</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 text-right">لیست برندها</h1>
       
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Image
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  تصویر
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  نام
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Created At
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  تاریخ ایجاد
                 </th>
               </tr>
             </thead>
@@ -90,11 +90,11 @@ const GetAllBrands = () => {
                       />
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-right">
                     {brand.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(brand.createdAt).toLocaleDateString()}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
+                    {new Date(brand.createdAt).toLocaleDateString('fa-IR')}
                   </td>
                 </tr>
               ))}
@@ -103,39 +103,39 @@ const GetAllBrands = () => {
         </div>
 
         {/* Pagination Controls */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
+        <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-t border-gray-200 gap-4">
           <div className="flex-1 flex justify-between sm:hidden">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
               className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
             >
-              Previous
+              قبلی
             </button>
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
               className="ml-3 inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
             >
-              Next
+              بعدی
             </button>
           </div>
           
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <p className="text-sm text-gray-700">
-                Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to{" "}
-                <span className="font-medium">{Math.min(currentPage * itemsPerPage, totalCount)}</span> of{" "}
-                <span className="font-medium">{totalCount}</span> results
+                نمایش <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> تا{" "}
+                <span className="font-medium">{Math.min(currentPage * itemsPerPage, totalCount)}</span> از{" "}
+                <span className="font-medium">{totalCount}</span> نتیجه
               </p>
               <select
                 value={itemsPerPage}
                 onChange={handleItemsPerPageChange}
                 className="border rounded-md px-2 py-1 text-sm"
               >
-                <option value={10}>10 per page</option>
-                <option value={20}>20 per page</option>
-                <option value={50}>50 per page</option>
+                <option value={10}>10 مورد در صفحه</option>
+                <option value={20}>20 مورد در صفحه</option>
+                <option value={50}>50 مورد در صفحه</option>
               </select>
             </div>
             
@@ -145,17 +145,17 @@ const GetAllBrands = () => {
                 disabled={currentPage === 1}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                Previous
+                قبلی
               </button>
               <span className="px-4 py-2 text-sm text-gray-700">
-                Page {currentPage} of {totalPages}
+                صفحه {currentPage} از {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                Next
+                بعدی
               </button>
             </div>
           </div>
@@ -163,7 +163,7 @@ const GetAllBrands = () => {
       </div>
 
       {brands.length === 0 && !loading && (
-        <div className="text-center text-gray-500 mt-8">No brands found</div>
+        <div className="text-center text-gray-500 mt-8">برندی یافت نشد</div>
       )}
     </div>
   );
