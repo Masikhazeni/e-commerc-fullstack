@@ -10,7 +10,7 @@ const ProductVariant = () => {
         onClick={() => navigate("create")}
         className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors mb-4"
       >
-        Create Product Variant
+        ایجاد متغیر محصول
       </button>
       <Outlet />
     </div>
