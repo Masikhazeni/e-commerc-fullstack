@@ -9,13 +9,12 @@ const CreateDiscountCode = () => {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  // useFormFields will create onChange handlers for us
   const [fields, handleChange] = useFormFields({
     code: "",
     percent: "",
     startTime: "",
     expireTime: "",
-    maxUsedCount: "1", // default is 1
+    maxUsedCount: "1",
     maxPrice: "",
     minPrice: "",
     isActive: false,
@@ -24,9 +23,8 @@ const CreateDiscountCode = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
-      // Prepare payload, converting numeric fields as needed and boolean for isActive.
       const payload = {
         code: fields.code,
         percent: Number(fields.percent),
@@ -48,118 +46,126 @@ const CreateDiscountCode = () => {
       });
 
       if (response.success) {
-        notify("Discount created successfully", "success");
+        notify("کد تخفیف با موفقیت ایجاد شد", "success");
         navigate("/discount-code");
       } else {
-        notify(response.message, "error");
+        notify(response.message || "خطا در ایجاد کد تخفیف", "error");
       }
     } catch (err) {
-      notify("Error creating discount", "error");
+      notify("خطا در ارتباط با سرور", "error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Create New Discount</h2>
+    <div className="max-w-xl w-full mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
+        ایجاد کد تخفیف جدید
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Code */}
+
         <div>
-          <label className="block text-sm font-medium">Code *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            کد تخفیف <span className="text-red-500">*</span>
+          </label>
           <input
             type="text"
             name="code"
             value={fields.code}
             onChange={handleChange}
-            placeholder="Enter discount code"
-            className="w-full px-3 py-2 border rounded-md"
+            placeholder="مثلاً: NEWYEAR50"
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
 
-        {/* Percent */}
         <div>
-          <label className="block text-sm font-medium">Discount Percent *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            درصد تخفیف <span className="text-red-500">*</span>
+          </label>
           <input
             type="number"
             name="percent"
             value={fields.percent}
             onChange={handleChange}
-            placeholder="Enter discount percent (1-100)"
-            className="w-full px-3 py-2 border rounded-md"
             min="1"
             max="100"
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            placeholder="بین ۱ تا ۱۰۰"
           />
         </div>
 
-        {/* Start Time */}
         <div>
-          <label className="block text-sm font-medium">Start Time</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            زمان شروع
+          </label>
           <input
             type="datetime-local"
             name="startTime"
             value={fields.startTime}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
 
-        {/* Expire Time */}
         <div>
-          <label className="block text-sm font-medium">Expire Time</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            زمان انقضا
+          </label>
           <input
             type="datetime-local"
             name="expireTime"
             value={fields.expireTime}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
 
-        {/* Maximum Usage Count */}
         <div>
-          <label className="block text-sm font-medium">Maximum Usage Count</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            حداکثر تعداد استفاده
+          </label>
           <input
             type="number"
             name="maxUsedCount"
             value={fields.maxUsedCount}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
             min="1"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
 
-        {/* Maximum Price */}
         <div>
-          <label className="block text-sm font-medium">Max Price</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            سقف مبلغ تخفیف
+          </label>
           <input
             type="number"
             name="maxPrice"
             value={fields.maxPrice}
             onChange={handleChange}
-            placeholder="Enter max price (if applicable)"
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            placeholder="اختیاری"
           />
         </div>
 
-        {/* Minimum Price */}
         <div>
-          <label className="block text-sm font-medium">Min Price</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            حداقل مبلغ خرید
+          </label>
           <input
             type="number"
             name="minPrice"
             value={fields.minPrice}
             onChange={handleChange}
-            placeholder="Enter min price (if applicable)"
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            placeholder="اختیاری"
           />
         </div>
 
-        {/* Active Toggle */}
-        <div>
-          <label className="block text-sm font-medium">Is Active?</label>
+        <div className="flex items-center">
           <input
             type="checkbox"
             name="isActive"
@@ -172,17 +178,17 @@ const CreateDiscountCode = () => {
                 },
               })
             }
-            className="mr-2"
+            className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
-          <span>{fields.isActive ? "Active" : "Inactive"}</span>
+          <label className="ml-2 text-sm text-gray-700">فعال باشد</label>
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded-md transition-colors"
+          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-300"
         >
-          {loading ? "Creating..." : "Create Discount"}
+          {loading ? "در حال ایجاد..." : "ایجاد کد تخفیف"}
         </button>
       </form>
     </div>
@@ -190,3 +196,4 @@ const CreateDiscountCode = () => {
 };
 
 export default CreateDiscountCode;
+

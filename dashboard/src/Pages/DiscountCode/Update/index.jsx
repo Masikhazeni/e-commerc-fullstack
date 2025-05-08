@@ -10,12 +10,12 @@ const UpdateDiscountCode = () => {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
 
-  // useFormFields returns only the modified fields
+  // استفاده از هوک سفارشی برای مدیریت فیلدهای فرم
   const [fields, handleChange] = useFormFields();
   const [initialData, setInitialData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Fetch discount details to pre-fill form
+  // دریافت اطلاعات کد تخفیف برای پر کردن اولیه فرم
   useEffect(() => {
     (async () => {
       try {
@@ -26,16 +26,16 @@ const UpdateDiscountCode = () => {
         if (response.success) {
           setInitialData(response.data);
         } else {
-          notify("Discount not found", "error");
+          notify("کد تخفیف یافت نشد", "error");
           navigate("/discount-code");
         }
       } catch (err) {
-        notify("Error fetching discount details", "error");
+        notify("خطا در دریافت اطلاعات کد تخفیف", "error");
       }
     })();
   }, [id, token, navigate]);
 
-  // Helper to get current field value (fields override initialData)
+  // تابع کمکی برای دریافت مقدار فعلی فیلدها
   const getFieldValue = (name) => {
     if (fields[name] !== undefined) return fields[name];
     if (initialData && initialData[name] !== undefined) return initialData[name];
@@ -67,13 +67,13 @@ const UpdateDiscountCode = () => {
         body: JSON.stringify(payload),
       });
       if (response.success) {
-        notify("Discount updated successfully", "success");
+        notify("کد تخفیف با موفقیت به‌روزرسانی شد", "success");
         navigate("/discount-code");
       } else {
         notify(response.message, "error");
       }
     } catch (err) {
-      notify("Error updating discount", "error");
+      notify("خطا در به‌روزرسانی کد تخفیف", "error");
     } finally {
       setLoading(false);
     }
@@ -82,134 +82,135 @@ const UpdateDiscountCode = () => {
   if (!initialData) {
     return (
       <div className="flex justify-center items-center h-64">
-        Loading...
+        در حال بارگذاری...
       </div>
     );
   }
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Update Discount</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Code */}
-        <div>
-          <label className="block text-sm font-medium">Code *</label>
+    <div className="max-w-xl mx-auto bg-white p-4 md:p-6 rounded-lg shadow-md">
+      <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-right">ویرایش کد تخفیف</h2>
+      <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
+        {/* کد تخفیف */}
+        <div className="text-right">
+          <label className="block text-sm md:text-base font-medium">کد تخفیف *</label>
           <input
             type="text"
             name="code"
             value={getFieldValue("code")}
             onChange={handleChange}
-            placeholder="Enter discount code"
-            className="w-full px-3 py-2 border rounded-md"
+            placeholder="کد تخفیف را وارد کنید"
+            className="w-full px-3 py-2 border rounded-md text-right"
             required
           />
         </div>
 
-        {/* Percent */}
-        <div>
-          <label className="block text-sm font-medium">Discount Percent *</label>
+        {/* درصد تخفیف */}
+        <div className="text-right">
+          <label className="block text-sm md:text-base font-medium">درصد تخفیف *</label>
           <input
             type="number"
             name="percent"
             value={getFieldValue("percent")}
             onChange={handleChange}
-            placeholder="Enter discount percent (1-100)"
-            className="w-full px-3 py-2 border rounded-md"
+            placeholder="درصد تخفیف را وارد کنید (1-100)"
+            className="w-full px-3 py-2 border rounded-md text-right"
             min="1"
             max="100"
             required
           />
         </div>
 
-        {/* Start Time */}
-        <div>
-          <label className="block text-sm font-medium">Start Time</label>
+        {/* زمان شروع */}
+        <div className="text-right">
+          <label className="block text-sm md:text-base font-medium">زمان شروع</label>
           <input
             type="datetime-local"
             name="startTime"
             value={getFieldValue("startTime") ? new Date(getFieldValue("startTime")).toISOString().slice(0,16) : ""}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md text-right"
           />
         </div>
 
-        {/* Expire Time */}
-        <div>
-          <label className="block text-sm font-medium">Expire Time</label>
+        {/* زمان انقضا */}
+        <div className="text-right">
+          <label className="block text-sm md:text-base font-medium">زمان انقضا</label>
           <input
             type="datetime-local"
             name="expireTime"
             value={getFieldValue("expireTime") ? new Date(getFieldValue("expireTime")).toISOString().slice(0,16) : ""}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md text-right"
           />
         </div>
 
-        {/* Maximum Usage Count */}
-        <div>
-          <label className="block text-sm font-medium">Maximum Usage Count</label>
+        {/* حداکثر تعداد استفاده */}
+        <div className="text-right">
+          <label className="block text-sm md:text-base font-medium">حداکثر تعداد استفاده</label>
           <input
             type="number"
             name="maxUsedCount"
             value={getFieldValue("maxUsedCount")}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md text-right"
             min="1"
           />
         </div>
 
-        {/* Maximum Price */}
-        <div>
-          <label className="block text-sm font-medium">Max Price</label>
+        {/* حداکثر قیمت */}
+        <div className="text-right">
+          <label className="block text-sm md:text-base font-medium">حداکثر قیمت</label>
           <input
             type="number"
             name="maxPrice"
             value={getFieldValue("maxPrice")}
             onChange={handleChange}
-            placeholder="Enter max price"
-            className="w-full px-3 py-2 border rounded-md"
+            placeholder="حداکثر قیمت را وارد کنید"
+            className="w-full px-3 py-2 border rounded-md text-right"
           />
         </div>
 
-        {/* Minimum Price */}
-        <div>
-          <label className="block text-sm font-medium">Min Price</label>
+        {/* حداقل قیمت */}
+        <div className="text-right">
+          <label className="block text-sm md:text-base font-medium">حداقل قیمت</label>
           <input
             type="number"
             name="minPrice"
             value={getFieldValue("minPrice")}
             onChange={handleChange}
-            placeholder="Enter min price"
-            className="w-full px-3 py-2 border rounded-md"
+            placeholder="حداقل قیمت را وارد کنید"
+            className="w-full px-3 py-2 border rounded-md text-right"
           />
         </div>
 
-        {/* Active Toggle */}
-        <div>
-          <label className="block text-sm font-medium">Is Active?</label>
-          <input
-            type="checkbox"
-            name="isActive"
-            checked={getFieldValue("isActive")}
-            onChange={(e) =>
-              handleChange({
-                target: {
-                  name: "isActive",
-                  value: e.target.checked,
-                },
-              })
-            }
-            className="mr-2"
-          />
-          <span>{getFieldValue("isActive") ? "Active" : "Inactive"}</span>
+        {/* وضعیت فعال بودن */}
+        <div className="flex items-center justify-end">
+          <label className="flex items-center text-sm md:text-base font-medium">
+            <span className="ml-2">فعال باشد؟</span>
+            <input
+              type="checkbox"
+              name="isActive"
+              checked={getFieldValue("isActive")}
+              onChange={(e) =>
+                handleChange({
+                  target: {
+                    name: "isActive",
+                    value: e.target.checked,
+                  },
+                })
+              }
+              className="ml-2"
+            />
+          </label>
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded-md transition-colors"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition-colors"
         >
-          {loading ? "Updating..." : "Update Discount"}
+          {loading ? "در حال به‌روزرسانی..." : "ذخیره تغییرات"}
         </button>
       </form>
     </div>

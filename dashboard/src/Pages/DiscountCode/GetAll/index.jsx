@@ -56,28 +56,30 @@ const GetAllDiscountCode = () => {
 
   if (error) {
     return (
-      <div className="p-4 bg-red-100 text-red-700 rounded-md mx-4 my-2">
-        Error: {error}
+      <div className="p-4 bg-red-100 text-red-700 rounded-md mx-4 my-2 text-center">
+        خطا در دریافت اطلاعات: {error}
       </div>
     );
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">All Discounts</h1>
+      <h1 className="text-2xl font-bold text-gray-800 mb-6 text-rirht">
+        لیست کدهای تخفیف
+      </h1>
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-gray-200 text-right">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Code</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Percent</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Start Time</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Expire Time</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Max Price</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Min Price</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Active</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Created At</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">کد</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">درصد</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">شروع</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">انقضا</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">سقف مبلغ</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">حداقل مبلغ</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">فعال؟</th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">تاریخ ایجاد</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -88,24 +90,24 @@ const GetAllDiscountCode = () => {
                   className="hover:bg-gray-50 cursor-pointer"
                 >
                   <td className="px-6 py-4 whitespace-nowrap">{disc.code}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{disc.percent}%</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{disc.percent}٪</td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {disc.startTime ? new Date(disc.startTime).toLocaleString() : "-"}
+                    {disc.startTime ? new Date(disc.startTime).toLocaleString("fa-IR") : "-"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {disc.expireTime ? new Date(disc.expireTime).toLocaleString() : "-"}
+                    {disc.expireTime ? new Date(disc.expireTime).toLocaleString("fa-IR") : "-"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {disc.maxPrice !== undefined ? `$${disc.maxPrice}` : "-"}
+                    {disc.maxPrice !== undefined ? `${disc.maxPrice.toLocaleString()} تومان` : "-"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {disc.minPrice !== undefined ? `$${disc.minPrice}` : "-"}
+                    {disc.minPrice !== undefined ? `${disc.minPrice.toLocaleString()} تومان` : "-"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {disc.isActive ? "Yes" : "No"}
+                    {disc.isActive ? "فعال" : "غیرفعال"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {new Date(disc.createdAt).toLocaleDateString()}
+                    {new Date(disc.createdAt).toLocaleDateString("fa-IR")}
                   </td>
                 </tr>
               ))}
@@ -114,39 +116,38 @@ const GetAllDiscountCode = () => {
         </div>
 
         {/* Pagination Controls */}
-        <div className="flex items-center justify-between p-4 border-t">
-          <div className="flex items-center gap-4">
-            <p className="text-sm">
-              Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-              {Math.min(currentPage * itemsPerPage, totalCount)} of {totalCount} results
-            </p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 border-t">
+          <div className="text-sm">
+            نمایش {Math.min((currentPage - 1) * itemsPerPage + 1, totalCount)} تا{" "}
+            {Math.min(currentPage * itemsPerPage, totalCount)} از {totalCount}
+          </div>
+          <div className="flex gap-2 items-center">
+            <label className="text-sm">تعداد در صفحه:</label>
             <select
               value={itemsPerPage}
               onChange={handleItemsPerPageChange}
-              className="border rounded px-2 py-1 text-sm"
+              className="border px-2 py-1 rounded"
             >
-              <option value={10}>10 per page</option>
-              <option value={20}>20 per page</option>
-              <option value={50}>50 per page</option>
+              <option value={10}>۱۰</option>
+              <option value={20}>۲۰</option>
+              <option value={50}>۵۰</option>
             </select>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 border rounded hover:bg-gray-50"
+              className="px-4 py-1 border rounded disabled:opacity-50"
             >
-              Previous
+              قبلی
             </button>
-            <span className="px-4 py-2">
-              Page {currentPage} of {totalPages}
-            </span>
+            <span className="text-sm">صفحه {currentPage} از {totalPages}</span>
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 border rounded hover:bg-gray-50"
+              className="px-4 py-1 border rounded disabled:opacity-50"
             >
-              Next
+              بعدی
             </button>
           </div>
         </div>
