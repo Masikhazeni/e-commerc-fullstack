@@ -2,23 +2,24 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../Store/Slices/AuthSlice";
 import { useState } from "react";
-import { 
-  FiHome, 
-  FiList, 
-  FiPlus, 
-  FiEdit, 
-  FiLogOut, 
+import {
+  FiHome,
+  FiList,
+  FiPlus,
+  FiEdit,
+  FiLogOut,
   FiChevronLeft,
   FiChevronRight,
   FiServer,
   FiUser,
-  FiMap, 
+  FiMap,
+  FiSliders,
   FiCodesandbox,
   FiCodepen,
   FiBox,
   FiPercent,
   FiMessageSquare,
-  FiShoppingCart
+  FiShoppingCart,
 } from "react-icons/fi";
 
 const Layout = () => {
@@ -32,20 +33,32 @@ const Layout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex" style={{ direction: 'rtl' }}>
+    <div className="min-h-screen bg-gray-100 flex" style={{ direction: "rtl" }}>
       {/* نوار کناری جمع شونده */}
-      <aside className={`${isCollapsed ? 'w-16' : 'w-64'} bg-white shadow-lg p-4 transition-all duration-200 flex flex-col`}>
+      <aside
+        className={`${
+          isCollapsed ? "w-16" : "w-64"
+        } bg-white shadow-lg p-4 transition-all duration-200 flex flex-col`}
+      >
         <div className="flex-1">
           {/* دکمه جمع کردن/باز کردن */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="w-full mb-6 p-2 hover:bg-gray-100 rounded-lg flex items-center justify-center"
           >
-            {isCollapsed ? <FiChevronLeft size={24} /> : <FiChevronRight size={24} />}
+            {isCollapsed ? (
+              <FiChevronLeft size={24} />
+            ) : (
+              <FiChevronRight size={24} />
+            )}
           </button>
 
           {/* عنوان نوار کناری */}
-          <div className={`text-2xl font-bold text-gray-800 mb-8 ${isCollapsed ? 'text-center' : 'px-2'}`}>
+          <div
+            className={`text-2xl font-bold text-gray-800 mb-8 ${
+              isCollapsed ? "text-center" : "px-2"
+            }`}
+          >
             {isCollapsed ? "⚡" : "پنل مدیریت"}
           </div>
 
@@ -58,8 +71,27 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiHome className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     پیشخوان
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/slider"
+                  className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                >
+                  <FiSliders className="flex-shrink-0" size={20} />
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
+                    اسلایدرها{" "}
                   </span>
                 </Link>
               </li>
@@ -69,7 +101,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiList className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     دسته‌بندی‌ها
                   </span>
                 </Link>
@@ -80,7 +116,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiServer className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     برندها
                   </span>
                 </Link>
@@ -91,7 +131,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiUser className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     کاربران
                   </span>
                 </Link>
@@ -102,7 +146,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiMap className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     آدرس‌ها
                   </span>
                 </Link>
@@ -113,7 +161,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiBox className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     محصولات
                   </span>
                 </Link>
@@ -124,7 +176,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiCodepen className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     انواع محصول
                   </span>
                 </Link>
@@ -135,7 +191,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiCodesandbox className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     تنوع محصولات
                   </span>
                 </Link>
@@ -146,7 +206,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiPercent className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     کدهای تخفیف
                   </span>
                 </Link>
@@ -157,7 +221,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiMessageSquare className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     نظرات
                   </span>
                 </Link>
@@ -168,7 +236,11 @@ const Layout = () => {
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                 >
                   <FiShoppingCart className="flex-shrink-0" size={20} />
-                  <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+                  <span
+                    className={`mr-3 ${
+                      isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+                    }`}
+                  >
                     سفارشات
                   </span>
                 </Link>
@@ -183,7 +255,11 @@ const Layout = () => {
           className="mt-auto flex items-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
         >
           <FiLogOut className="flex-shrink-0" size={20} />
-          <span className={`mr-3 ${isCollapsed ? 'opacity-0 w-0 absolute' : 'opacity-100'}`}>
+          <span
+            className={`mr-3 ${
+              isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
+            }`}
+          >
             خروج
           </span>
         </button>
@@ -197,9 +273,15 @@ const Layout = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
           >
-            {isCollapsed ? <FiChevronLeft size={20} /> : <FiChevronRight size={20} />}
+            {isCollapsed ? (
+              <FiChevronLeft size={20} />
+            ) : (
+              <FiChevronRight size={20} />
+            )}
           </button>
-          <h1 className="text-xl font-semibold text-gray-800">خوش آمدید، مدیر</h1>
+          <h1 className="text-xl font-semibold text-gray-800">
+            خوش آمدید، مدیر
+          </h1>
         </header>
 
         {/* محفظه محتوا */}

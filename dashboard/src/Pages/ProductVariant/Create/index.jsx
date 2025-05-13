@@ -26,7 +26,7 @@ const CreateProductVariant = () => {
   useEffect(() => {
     (async () => {
       try {
-        const prodResponse = await fetchData("product", {
+        const prodResponse = await fetchData("product?limit=1000", {
           method: "GET",
           headers: { authorization: `Bearer ${token}` },
         });
@@ -181,7 +181,7 @@ const CreateProductVariant = () => {
             قیمت بعد از تخفیف:
           </label>
           <p className="mt-1 text-lg font-semibold">
-            {computePriceAfterDiscount() ? `${computePriceAfterDiscount()}$` : "-"}
+            {computePriceAfterDiscount() ? `${computePriceAfterDiscount()}تومان` : "-"}
           </p>
         </div>
 

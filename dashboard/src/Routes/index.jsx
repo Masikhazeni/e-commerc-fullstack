@@ -9,6 +9,7 @@ import Categories from "../Pages/Categories";
 import CreateCategory from "../Pages/Categories/Create";
 import UpdateCategory from "../Pages/Categories/Update";
 import Brands from "../Pages/Brands";
+import Sliders from "../Pages/Sliders";
 import GetAllBrands from "../Pages/Brands/GetAll";
 import CreateBrand from "../Pages/Brands/Create";
 import UpdateBrand from "../Pages/Brands/Update";
@@ -40,6 +41,10 @@ import Reply from "../Pages/Comments/Reply";
 import Order from "../Pages/Order";
 import GetAllOrders from "../Pages/Order/GetAll";
 import GetOneOrder from "../Pages/Order/GetOne";
+import Slider from "../Pages/Sliders";
+import GetAllSliders from "../Pages/Sliders/GetAll";
+import CreateSlider from "../Pages/Sliders/Create";
+import UpdateSlider from "../Pages/Sliders/Update";
 const checkAuth = () => {
   const state = store.getState();
   const token = state?.auth?.token;
@@ -75,6 +80,23 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/slider",
+        element: <Sliders/>,
+        children: [
+          { 
+            index:true, 
+            element: <GetAllSliders /> 
+          },
+          {
+            path: "create",
+            element: <CreateSlider/>,
+          },
+          {
+            path: "update/:id",
+            element: <UpdateSlider />,
+          },
+        ],
+      },{
         path: "/category",
         element: <Categories />,
         children: [

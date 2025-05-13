@@ -30,6 +30,19 @@ export const getOne = catchAsync(async (req, res, next) => {
     data: slider,
   });
 });
+export const update = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const slider = await Slider.findByIdAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  return res.status(200).json({
+    success: true,
+    data: slider,
+  });
+});
 export const remove = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const slider = await Slider.findByIdAndDelete(id);

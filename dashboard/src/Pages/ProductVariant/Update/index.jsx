@@ -20,7 +20,7 @@ const UpdateProductVariant = () => {
   useEffect(() => {
     (async () => {
       try {
-        const prodResponse = await fetchData("product", {
+        const prodResponse = await fetchData("product?limit=1000", {
           method: "GET",
           headers: { authorization: `Bearer ${token}` },
         });
