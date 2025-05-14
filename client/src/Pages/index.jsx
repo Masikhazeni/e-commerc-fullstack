@@ -4,4 +4,10 @@ import CheckOtp from "./Authorization/CheckOtp"
 import CheckPass from "./Authorization/CheckPass"
 import ForgetPass from "./Authorization/ForgetPass"
 import Home from "./Home"
-export {Authorization,Auth,CheckOtp,CheckPass,ForgetPass,Home}
+import Products from "./Products"
+import ProductsDetails from "./ProductsDetails"
+import Cart from "./Cart"
+import Profile from "./Profile"
+import NotFound from "./NotFound"
+import About from "./About"
+export {Authorization,Auth,CheckOtp,CheckPass,ForgetPass,Home,Products,ProductsDetails,Profile,Cart,NotFound,About}
