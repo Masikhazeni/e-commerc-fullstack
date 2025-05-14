@@ -2,20 +2,21 @@ import { createTheme } from "@mui/material/styles";
 
 // تم روشن (Light Theme)
 const lightTheme = createTheme({
-  direction: "ltr",
+  direction: "rtl",
   palette: {
     mode: "light",
-    primary: { main: "#0d9488" },
-    secondary: { main: "#4b5563" },
+    primary: { main: "#841E96" }, //  بنفش اصلی
+    third: { main: "#631C80" }, //بنفش تیره تر
     text: {
-      primary: "#010101",
-      secondary: "#4f5e53",
-      third:'#000000',
-      furth:'#ffffff'
+      primary: "#FFFFFF", // سفید
+      secondary: "#53156B", // بنفش خیلی تیره
+      third: "#000000", // مشکی
     },
     background: {
-      default: "#ffffff",
-      paper: "#f5f5f5",
+      default: "#ffffff", // سفید
+      paper: "#E6E6FA", // خاکستری نفش خیلی روشن
+      border: "#841E96", // بنفش اصلی
+      buttom: "#631C80", // بنفش تیره تر
     },
   },
 });
@@ -25,20 +26,20 @@ const darkTheme = createTheme({
   direction: "rtl",
   palette: {
     mode: "dark",
-    primary: { main: "#535E6E" },
-    secondary: { main: "#353D4A" },
+    primary: { main: "#3D3D3D" }, // زغال سنگی
+    secondary: { main: "#000000" },
     text: {
-      primary: "#ffffff",
-      secondary: "#d1d5db",
-      third:'#FFFFFF',
-      furth:'#000000'
+      primary: "#631C80", //   بنفش اصلی
+      secondary: "#FFFFFF", // سفید
+      third: "#3D3D3D", //  خاکستری تیره
     },
     background: {
-      default: "#121212",
-      paper: "#1e1e1e",
+      default: "#000000", // مشکی
+      paper: "#666666", // خاکستری متوسط
+      border: "#631C80", // بنفش اصلی
+      buttom: "#631C80", // بنفش تیره تر
     },
   },
 });
 
 export { lightTheme, darkTheme };
-
