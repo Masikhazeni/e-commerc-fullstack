@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 // تم روشن (Light Theme)
 const lightTheme = createTheme({
-  direction: "rtl",
+  direction: "ltr",
   palette: {
     mode: "light",
     primary: { main: "#0d9488" },
