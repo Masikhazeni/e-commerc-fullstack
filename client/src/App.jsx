@@ -17,7 +17,7 @@ import {
   Profile,
   Cart,
   NotFound,
-  About
+  About,Favorite
 } from "./Pages";
 
 import { darkTheme, lightTheme } from "./Theme";
@@ -50,6 +50,7 @@ export default function App() {
           <Route path="/products/:categoryId/:categoryName" element={<Products/>}/>
            <Route path="/product-details/:id/:name" element={<ProductsDetails/>}/>
             <Route path="/profile" element={!token ? <Navigate to="/authorization" /> : <Profile />}/>
+            <Route path="/favorite" element={!token ? <Navigate to="/authorization" /> : <Favorite />}/>
              <Route path="/cart" element={!token ? <Navigate to="/authorization" /> : <Cart />}/>
              <Route path="*" element={<NotFound/>}/>
         </Routes>

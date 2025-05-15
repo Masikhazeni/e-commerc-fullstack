@@ -10,4 +10,5 @@ import Cart from "./Cart"
 import Profile from "./Profile"
 import NotFound from "./NotFound"
 import About from "./About"
-export {Authorization,Auth,CheckOtp,CheckPass,ForgetPass,Home,Products,ProductsDetails,Profile,Cart,NotFound,About}
+import Favorite from "./Favorites"
+export {Favorite,Authorization,Auth,CheckOtp,CheckPass,ForgetPass,Home,Products,ProductsDetails,Profile,Cart,NotFound,About}
