@@ -1,9 +1,13 @@
 import React from 'react'
+import MainSlider from './MainSlider'
+import MainSection from './MainSection'
 
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome to Home Page</h1>
-    </div>
+    <>
+    <MainSlider/>
+    <MainSection/>
+      
+    </>
   )
 }

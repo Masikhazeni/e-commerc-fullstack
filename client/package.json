@@ -17,12 +17,14 @@
     "@reduxjs/toolkit": "^2.5.1",
     "@tailwindcss/vite": "^4.0.7",
     "dotenv": "^16.4.7",
+    "framer-motion": "^12.12.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.5.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.2.0",
     "react-spinner": "^0.2.7",
+    "swiper": "^11.2.6",
     "tailwind": "^4.0.0"
   },
   "devDependencies": {
