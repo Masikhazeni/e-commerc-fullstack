@@ -6,7 +6,7 @@ const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: { main: "#841E96" }, //  بنفش اصلی
-    third: { main: "#631C80" }, //بنفش تیره تر
+    secondary: { main: "#631C80" }, //بنفش تیره تر
     text: {
       primary: "#FFFFFF", // سفید
       secondary: "#53156B", // بنفش خیلی تیره
@@ -29,7 +29,7 @@ const darkTheme = createTheme({
     primary: { main: "#3D3D3D" }, // زغال سنگی
     secondary: { main: "#000000" },
     text: {
-      primary: "#631C80", //   بنفش اصلی
+      primary: "#E6E6FA", //   بنفش اصلی
       secondary: "#FFFFFF", // سفید
       third: "#3D3D3D", //  خاکستری تیره
     },

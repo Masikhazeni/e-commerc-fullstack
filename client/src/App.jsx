@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ThemeProvider } from "@emotion/react";
@@ -24,9 +24,13 @@ import { darkTheme, lightTheme } from "./Theme";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 
+
 export default function App() {
   const token = useSelector((state) => state.auth.token);
   const { mode } = useSelector((state) => state.theme);
+   useEffect(() => {
+    document.body.dir = 'rtl'; // خیلی مهم برای HTML
+  }, []);
 
   const theme = mode === "light" ? lightTheme : darkTheme;
 
