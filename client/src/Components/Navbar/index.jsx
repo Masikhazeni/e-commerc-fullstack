@@ -610,7 +610,7 @@ export default function Navbar() {
                 <Button
                   onClick={() => dispatch(logout())}
                   sx={{
-                    color: theme.palette.text.primary,
+                    color: 'red',
                     "&:hover": {
                       opacity: 0.5,
                     },

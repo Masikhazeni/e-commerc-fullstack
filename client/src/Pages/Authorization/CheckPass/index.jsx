@@ -3,12 +3,15 @@ import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import notify from '../../../Utils/notify';
 import fetchData from '../../../Utils/fetchData';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../Store/Slices/AuthSlice';
 
 const CheckPass = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const phoneNumber = localStorage.getItem('phoneNumber');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,9 +29,9 @@ const CheckPass = () => {
       });
 
       if (res.success) {
+        dispatch(login({ user: res.data.user, token: res.data.token }));
         notify(res.message || 'ورود موفقیت‌آمیز بود', 'success');
-        localStorage.setItem('token', res.data.token);
-        navigate('/'); // یا هر صفحه‌ای که کاربر بعد از ورود باید بره
+        navigate('/');
       } else {
         notify(res.message || 'خطا در ورود', 'error');
       }
@@ -96,4 +99,5 @@ const CheckPass = () => {
 };
 
 export default CheckPass;
+
 
