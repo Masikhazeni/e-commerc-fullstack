@@ -213,7 +213,7 @@ export default function Navbar() {
                 sx={{
                   width: "70px",
                   height: "70px",
-                  borderRadius: "50%",
+                 
                   objectFit: "cover",
                 }}
               />

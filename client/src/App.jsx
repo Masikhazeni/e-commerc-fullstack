@@ -9,7 +9,7 @@ import {
   Authorization,
   Auth,
   CheckOtp,
-  CheckPass,
+
   ForgetPass,
   Home,
   Products,
@@ -17,7 +17,8 @@ import {
   Profile,
   Cart,
   NotFound,
-  About,Favorite
+  About,Favorite,
+  CheckPass
 } from "./Pages";
 
 import { darkTheme, lightTheme } from "./Theme";
@@ -48,7 +49,7 @@ export default function App() {
           >
             <Route index element={<Auth />} />
             <Route path="otp" element={<CheckOtp />} />
-            <Route path="pass" element={<CheckPass />} />
+            <Route path="pass" element={<CheckPass/>} />
             <Route path="forget-pass" element={<ForgetPass />} />
           </Route>
           <Route path="/products/:categoryId/:categoryName" element={<Products/>}/>
