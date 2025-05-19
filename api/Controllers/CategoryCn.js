@@ -26,7 +26,7 @@ export const getAll = catchAsync(async (req, res, next) => {
     .sort()
     .limitFields()
     .paginate()
-    .populate()
+    .populate('')
     const data=await features.execute()
     return res.status(200).json(data);
 });

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Box, Paper, Typography, TextField, Button } from '@mui/material';
-import notify from '../../../Utils/notify';
-import fetchData from '../../../Utils/fetchData';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../../../Store/Slices/AuthSlice';
+import React, { useState } from "react";
+import { Box, Paper, Typography, TextField, Button } from "@mui/material";
+import notify from "../../../Utils/notify";
+import fetchData from "../../../Utils/fetchData";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../../Store/Slices/AuthSlice";
 
 const CheckPass = () => {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const phoneNumber = localStorage.getItem('phoneNumber');
+  const phoneNumber = localStorage.getItem("phoneNumber");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -17,26 +17,29 @@ const CheckPass = () => {
     e.preventDefault();
 
     if (!password) {
-      return notify('لطفاً رمز عبور را وارد کنید', 'error');
+      return notify("لطفاً رمز عبور را وارد کنید", "error");
     }
 
     try {
       setLoading(true);
-      const res = await fetchData('auth/password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetchData("auth/password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phoneNumber, password }),
       });
 
       if (res.success) {
         dispatch(login({ user: res.data.user, token: res.data.token }));
-        notify(res.message || 'ورود موفقیت‌آمیز بود', 'success');
-        navigate('/');
+
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        notify(res.message || "ورود موفقیت‌آمیز بود", "success");
+        navigate("/");
       } else {
-        notify(res.message || 'خطا در ورود', 'error');
+        notify(res.message || "خطا در ورود", "error");
       }
     } catch (err) {
-      notify('خطایی رخ داده است', 'error');
+      notify("خطایی رخ داده است", "error");
     } finally {
       setLoading(false);
     }
@@ -46,11 +49,11 @@ const CheckPass = () => {
     <Box
       dir="rtl"
       sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: 'grey.100',
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "grey.100",
       }}
     >
       <Paper
@@ -58,7 +61,7 @@ const CheckPass = () => {
         sx={{
           p: 4,
           borderRadius: 2,
-          width: '100%',
+          width: "100%",
           maxWidth: 400,
         }}
       >
@@ -90,7 +93,7 @@ const CheckPass = () => {
             disabled={loading}
             sx={{ mt: 2 }}
           >
-            {loading ? 'در حال ورود...' : 'ورود'}
+            {loading ? "در حال ورود..." : "ورود"}
           </Button>
         </Box>
       </Paper>
@@ -99,5 +102,3 @@ const CheckPass = () => {
 };
 
 export default CheckPass;
-
-

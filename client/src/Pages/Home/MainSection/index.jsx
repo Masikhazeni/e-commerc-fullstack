@@ -14,6 +14,8 @@ export default function MainSection() {
   }, []);
 
   if (!parents.length) return null;
+  
+
 
   return (
     <Box
@@ -47,7 +49,7 @@ export default function MainSection() {
             position: "absolute",
             width: "100%",
             height: "100%",
-            backgroundImage: `url(${import.meta.env.VITE_BASE_URL + parents[0].image})`,
+            backgroundImage: `url(${import.meta.env.VITE_BASE_URL + parents[1].image})`,
             backgroundSize: "contain",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -58,17 +60,17 @@ export default function MainSection() {
         />
         <Box sx={{ position: "relative", zIndex: 2, p: 3, width: "100%" }}>
           <Typography variant="h5" sx={{ fontWeight: 700, color: "#fff" }}>
-            {parents[0].name}
+            {parents[1].name}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1, color: "#fff" }}>
-            محصولات محبوب در دسته {parents[0].name}
+            محصولات محبوب در دسته {parents[1].name}
           </Typography>
         </Box>
       </Box>
 
       {/* Left two stacked boxes */}
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        {[1, 2].map((i) =>
+        {[0, 2].map((i) =>
           parents[i] ? (
             <Box
               key={parents[i]._id}
@@ -120,7 +122,7 @@ export default function MainSection() {
         )}
       </Box>
     </Box>
+
+   
   );
 }
-
-

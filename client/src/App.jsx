@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline, Box } from "@mui/material";
 import { Toaster } from "react-hot-toast";
@@ -24,14 +24,24 @@ import {
 import { darkTheme, lightTheme } from "./Theme";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import { login } from "./Store/Slices/AuthSlice";
 
 
 export default function App() {
   const token = useSelector((state) => state.auth.token);
   const { mode } = useSelector((state) => state.theme);
+  const dispatch=useDispatch()
    useEffect(() => {
     document.body.dir = 'rtl'; // خیلی مهم برای HTML
   }, []);
+    useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+
+    if (token && user) {
+      dispatch(login({ token, user: JSON.parse(user) }));
+    }
+  }, [dispatch]);
 
   const theme = mode === "light" ? lightTheme : darkTheme;
 

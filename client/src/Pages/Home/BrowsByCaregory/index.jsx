@@ -60,7 +60,7 @@ export default function BrowseByCategory() {
                 mt: 1,
                 textAlign: "center",
                 color:theme.palette.text.secondary,
-                fontWeight:'600'
+                fontWeight:'600',
               }}
             >
               {e.name}

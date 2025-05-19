@@ -44,6 +44,8 @@ export default function ForgetPassStepTwo({ handleStep }) {
     if (res.success) {
       notify("رمز عبور با موفقیت تغییر یافت!", "success");
       dispatch(login({ token: res.data.token, user: res.data.user }));
+       const token = localStorage.getItem('token');
+       const user = localStorage.getItem('user');
     } else {
       notify(res.message, "error");
     }
