@@ -53,6 +53,7 @@ export default function NewestProducts() {
     <SwiperSlide
       key={p._id}
       style={{
+        width:'330px',
         height: "360px",
         display: "flex",
         justifyContent: "center",
@@ -68,10 +69,13 @@ export default function NewestProducts() {
       sx={{
         width: "94%",
         margin: "0 auto",
-        // px: { xs: 2, md: 10} ,
+       borderRadius:'10px',
         py: 4,
-        backgroundColor: theme.palette.background.default,
+        px:'5%',
+        backgroundColor:theme.palette.background.box ,
         overflow: "hidden",
+        height:'500px',
+        pb:'40px'
       }}
     >
       <Typography
@@ -90,12 +94,12 @@ export default function NewestProducts() {
         <Swiper
           ref={swiperRef}
           slidesPerView={6}
-          spaceBetween={24}
+          spaceBetween={40}
           breakpoints={{
             320: { slidesPerView: 1 },
             600: { slidesPerView: 2 },
-            900: { slidesPerView: 4 },
-            1200: { slidesPerView: 6 },
+            900: { slidesPerView: 3 },
+            1200: { slidesPerView: 5 },
           }}
           loop={products.length > 1}
           autoplay={{

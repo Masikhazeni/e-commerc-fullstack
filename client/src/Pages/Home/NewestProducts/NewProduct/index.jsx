@@ -10,12 +10,9 @@ import {
   IconButton,
   useTheme,
 } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export default function NewProduct({ title, image, id }) {
   const [variant, setVariant] = useState(null);
-  const [isFav, setIsFav] = useState(false);
   const theme = useTheme();
 
   useEffect(() => {
@@ -46,7 +43,7 @@ export default function NewProduct({ title, image, id }) {
       <Card
         sx={{
           width: 230,
-          height: 340,             /* ارتفاع ثابت */
+          height: 350 /* ارتفاع ثابت */,
           borderRadius: 3,
           boxShadow: 2,
           overflow: "hidden",
@@ -58,12 +55,12 @@ export default function NewProduct({ title, image, id }) {
         }}
       >
         {/* تصویر و آیکون‌ها */}
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative" ,padding:'5px'}}>
           <Box
             component="img"
             src={`${import.meta.env.VITE_BASE_URL + image}`}
             alt={title}
-            sx={{ width: "100%", height: 180, objectFit: "cover" }}
+            sx={{ width: "100%", height:'200px' }}
           />
 
           {/* تخفیف */}
@@ -104,7 +101,12 @@ export default function NewProduct({ title, image, id }) {
         >
           <Typography
             noWrap
-            sx={{ fontWeight: 600, mb: 1, textAlign: "center" ,color:theme.palette.text.secondary}}
+            sx={{
+              fontWeight: 600,
+              mb: 1,
+              textAlign: "center",
+              color: theme.palette.text.secondary,
+            }}
           >
             {title}
           </Typography>
@@ -122,7 +124,13 @@ export default function NewProduct({ title, image, id }) {
                   {variant.price.toLocaleString("fa-IR")} تومان
                 </Typography>
               )}
-              <Typography sx={{ fontWeight: '600', fontSize: ".9rem",color:theme.palette.text.secondary }}>
+              <Typography
+                sx={{
+                  fontWeight: "600",
+                  fontSize: ".9rem",
+                  color: theme.palette.text.secondary,
+                }}
+              >
                 {variant.priceAfterDiscount.toLocaleString("fa-IR")} تومان
               </Typography>
             </Box>
@@ -137,7 +145,11 @@ export default function NewProduct({ title, image, id }) {
             to={`/product-details/${id}/${title}`}
             variant="contained"
             size="small"
-            sx={{ mt: 1, borderRadius: 2,backgroundColor:theme.palette.background.buttom }}
+            sx={{
+              mt: 1,
+              borderRadius: 2,
+              backgroundColor: theme.palette.background.buttom,
+            }}
           >
             مشاهده محصول
           </Button>
@@ -146,4 +158,3 @@ export default function NewProduct({ title, image, id }) {
     </Box>
   );
 }
-

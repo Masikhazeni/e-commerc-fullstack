@@ -9,10 +9,10 @@ export default function Home() {
   return (
     <>
     <MainSlider/>
+    <DiscountPoster/>
     <MainSection/>
     <BrowseByCategory/>
     <NewestProducts/>
-    <DiscountPoster/>
       
     </>
   )

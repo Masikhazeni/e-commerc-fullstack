@@ -25,12 +25,11 @@ export default function BrowseByCategory() {
                 )}}
             sx={{
               width: '220px',
-              height: " 250px",
+              height: " 220px",
               border: `1px solid ${theme.palette.background.border}`,
-              borderRadius: 2,
+              borderRadius: "50%",
               overflow: "hidden",
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
               justifyContent: "space-between",
               p: 1,
@@ -40,6 +39,7 @@ export default function BrowseByCategory() {
                 boxShadow: 4,
                 transform: "scale(1.05)",
               },
+              mb:'40px'
             }}
           >
             <Box
@@ -49,11 +49,9 @@ export default function BrowseByCategory() {
               sx={{
                 width: "100%",
                 height: "70%",
-                objectFit: "cover",
-                borderRadius: 1,
               }}
             />
-            <Typography
+            {/* <Typography
               sx={{
                 fontSize: "18px",
                 fontWeight: 500,
@@ -64,7 +62,7 @@ export default function BrowseByCategory() {
               }}
             >
               {e.name}
-            </Typography>
+            </Typography> */}
           </Box>
         ))
 

@@ -17,6 +17,7 @@ const lightTheme = createTheme({
       paper: "#EFEEEA", // خاکستری نفش خیلی روشن
       border: "#273F4F", // بنفش اصلی
       buttom: "#FE7743", // بنفش تیره تر
+      box:'#9EC9E8',
       err: "#841E96",
     },
   },
@@ -38,6 +39,7 @@ const darkTheme = createTheme({
       paper: "#666666", // خاکستری متوسط
       border: "#273F4F", // بنفش اصلی
       buttom: "#D15828", // بنفش تیره تر
+      box:'#858F99',
       err: "#ED0202",
     },
   },

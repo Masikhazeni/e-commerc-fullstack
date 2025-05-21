@@ -43,19 +43,23 @@ export default function DiscountPoster({
   return (
     <Box
       sx={{
-        width: { xs: "100%", sm: 380 },
+        width: '100%',
         mx: "auto",
         p: 4,
-        borderRadius: 4,
         textAlign: "center",
         color: "#fff",
-        background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+        background: `linear-gradient(135deg, ${theme.palette.background.buttom} 0%, ${theme.palette.background.buttom} 100%)`,
         boxShadow: 6,
         fontFamily: "monospace",
+        display:'flex',
+        flexDirection:{xs:'column',md:'row'},
+        alignItems:'center',
+        justifyContent:'center',
+        gap:{xs:'20px',md:'80px'}
       }}
     >
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
-        🎉 {percent}% تخفیف ویژه
+        🎉 {percent}%  تخفیف ویژه تابستانی
       </Typography>
 
       {/* کد تخفیف */}
@@ -86,9 +90,9 @@ export default function DiscountPoster({
           mt: 1,
         }}
       >
-        <TimeBox label="ثانیه"  val={time.secs} />
-        <TimeBox label="دقیقه"  val={time.mins} />
-        <TimeBox label="ساعت"   val={time.hrs} />
+        <TimeBox label="ثانیه"  val={time.secs} />:
+        <TimeBox label="دقیقه"  val={time.mins} />:
+        <TimeBox label="ساعت"   val={time.hrs} />:
         <TimeBox label="روز"    val={time.days} />
       </Box>
     </Box>

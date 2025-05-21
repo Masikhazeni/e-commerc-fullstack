@@ -27,7 +27,7 @@ const CreateProduct = () => {
   useEffect(() => {
     (async () => {
       try {
-        const catResponse = await fetchData("category", {
+        const catResponse = await fetchData("category?limit=1000", {
           method: "GET",
           headers: { authorization: `Bearer ${token}` }
         });
