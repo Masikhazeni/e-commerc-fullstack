@@ -21,6 +21,7 @@ const CreateProduct = () => {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+ 
   const [brands, setBrands] = useState([]);
 
   useEffect(() => {
@@ -46,6 +47,8 @@ const CreateProduct = () => {
       }
     })();
   }, [token]);
+
+  
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -153,7 +156,7 @@ const CreateProduct = () => {
             ))}
           </select>
         </div>
-
+        
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">برند *</label>
           <select

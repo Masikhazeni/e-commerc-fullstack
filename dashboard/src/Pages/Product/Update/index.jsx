@@ -21,6 +21,7 @@ const UpdateProduct = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
+   const [difaultVar, setDifaultVar] = useState([]);
 
   // دریافت دسته‌بندی‌ها و برندها
   useEffect(() => {
@@ -45,6 +46,29 @@ const UpdateProduct = () => {
       }
     })();
   }, [token]);
+    useEffect(() => {
+    (async () => {
+      try {
+        const defaultVarResponse = await fetchData(`product-variant?productId=${id}`, {
+          method: "GET",
+          headers: { authorization: `Bearer ${token}` }
+        });
+        if (defaultVarResponse.success) {
+          setDifaultVar(defaultVarResponse.data);
+        }
+
+        const brandResponse = await fetchData("brand", {
+          method: "GET",
+          headers: { authorization: `Bearer ${token}` },
+        });
+        if (brandResponse.success) {
+          setBrands(brandResponse.data);
+        }
+      } catch (err) {
+        notify("خطا در دریافت دسته‌بندی یا برند", "error");
+      }
+    })();
+  }, [token]);
 
   // دریافت اطلاعات محصول
   useEffect(() => {
@@ -55,9 +79,9 @@ const UpdateProduct = () => {
           headers: { authorization: `Bearer ${token}` },
         });
         if (response.success) {
-          setInitialData(response.data);
-          setImages(response.data.imagesUrl || []);
-          setInformation(response.data.information || []);
+          setInitialData(response.data.product);
+          setImages(response.data.product.imagesUrl || []);
+          setInformation(response.data.product.information || []);
         } else {
           notify("محصول یافت نشد!", "error");
           navigate("/product");
@@ -185,6 +209,23 @@ const UpdateProduct = () => {
             ))}
           </select>
         </div>
+        {/* انتخاب نوع */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">نوع محصول *</label>
+          <select
+            name="defaultProductVariantId"
+            value={fields.defaultProductVariantId}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            required
+          >
+            <option value="">انتخاب نوع</option>
+            {difaultVar.map((dv) => (
+              <option key={dv._id} value={dv._id}>{dv.price}</option>
+            ))}
+          </select>
+        </div>
+
 
         {/* انتخاب برند */}
         <div>

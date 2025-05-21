@@ -23,8 +23,8 @@ const CheckOtp = () => {
     });
     if (res.success) {
       dispatch(login({ user: res?.data?.user, token: res?.data?.token }));
-       const token = localStorage.getItem('token');
-       const user = localStorage.getItem('user');
+      //  const token = localStorage.getItem('token');
+      //  const user = localStorage.getItem('user');
       notify(res.message, "success");
       navigate("/");
     } else {

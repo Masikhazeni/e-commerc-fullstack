@@ -42,6 +42,7 @@ export default function App() {
       dispatch(login({ token, user: JSON.parse(user) }));
     }
   }, [dispatch]);
+  
 
   const theme = mode === "light" ? lightTheme : darkTheme;
 

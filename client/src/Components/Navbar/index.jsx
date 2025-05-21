@@ -119,7 +119,7 @@ export default function Navbar() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetchData("category");
+      const res = await fetchData("category?limit=1000");
       setCategories(res.data || []);
     })();
   }, []);
