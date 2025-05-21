@@ -4,6 +4,7 @@ import MainSection from './MainSection'
 import BrowseByCategory from './BrowsByCaregory'
 import NewestProducts from './NewestProducts'
 import DiscountPoster from './DiscountPoster'
+import ThemostDiscount from './ThemostDiscount'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
     <DiscountPoster/>
     <MainSection/>
     <BrowseByCategory/>
+    <ThemostDiscount/>
     <NewestProducts/>
       
     </>

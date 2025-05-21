@@ -221,7 +221,7 @@ const UpdateProduct = () => {
           >
             <option value="">انتخاب نوع</option>
             {difaultVar.map((dv) => (
-              <option key={dv._id} value={dv._id}>{dv.price}</option>
+              <option key={dv._id} value={dv._id}>{dv.discount}</option>
             ))}
           </select>
         </div>
