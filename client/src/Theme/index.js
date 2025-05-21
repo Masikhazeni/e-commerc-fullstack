@@ -16,7 +16,7 @@ const lightTheme = createTheme({
       default: "#ffffff", // سفید
       paper: "#EFEEEA", // خاکستری نفش خیلی روشن
       border: "#273F4F", // بنفش اصلی
-      buttom: "#FE7743", // بنفش تیره تر
+      buttom: "red", // بنفش تیره تر
       box:'#9EC9E8',
       err: "#841E96",
     },

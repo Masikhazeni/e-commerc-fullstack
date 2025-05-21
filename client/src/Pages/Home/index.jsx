@@ -11,10 +11,10 @@ export default function Home() {
     <>
     <MainSlider/>
     <DiscountPoster/>
-    <MainSection/>
-    <BrowseByCategory/>
     <ThemostDiscount/>
+    <BrowseByCategory/>
     <NewestProducts/>
+    <MainSection/>
       
     </>
   )

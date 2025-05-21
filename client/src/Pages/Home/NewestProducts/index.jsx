@@ -75,7 +75,8 @@ export default function NewestProducts() {
         backgroundColor:theme.palette.background.box ,
         overflow: "hidden",
         height:'500px',
-        pb:'40px'
+        pb:'40px',
+        mb:'40px'
       }}
     >
       <Typography

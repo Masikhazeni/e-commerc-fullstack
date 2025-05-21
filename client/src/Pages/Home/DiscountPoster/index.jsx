@@ -55,7 +55,8 @@ export default function DiscountPoster({
         flexDirection:{xs:'column',md:'row'},
         alignItems:'center',
         justifyContent:'center',
-        gap:{xs:'20px',md:'80px'}
+        gap:{xs:'20px',md:'80px'},
+        mb:'40px'
       }}
     >
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
