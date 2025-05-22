@@ -38,7 +38,7 @@ export default function Footer() {
         color: theme.palette.text.primary,
         py: 4,
         direction: "rtl",
-        mt: 8,
+        
       }}
     >
       <Container maxWidth="lg">
