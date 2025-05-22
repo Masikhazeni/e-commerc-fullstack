@@ -142,7 +142,7 @@ export default function NewProduct({ title, image, id }) {
 
           <Button
             component={Link}
-            to={`/product-details/${id}/${title}`}
+            to={`/product-details/${id}/${title.replaceAll(" ", "-")}`}
             variant="contained"
             size="small"
             sx={{

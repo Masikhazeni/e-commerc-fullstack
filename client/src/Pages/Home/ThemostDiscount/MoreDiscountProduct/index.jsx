@@ -120,7 +120,7 @@ export default function MoreDiscountProduct({ title, image, id, variantData }) {
 
           <Button
             component={Link}
-            to={`/product-details/${id}/${title}`}
+            to={`/product-details/${id}/${title.replaceAll(" ", "-")}`}
             variant="contained"
             size="small"
             sx={{

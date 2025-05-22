@@ -63,7 +63,7 @@ export default function App() {
             <Route path="pass" element={<CheckPass/>} />
             <Route path="forget-pass" element={<ForgetPass />} />
           </Route>
-          <Route path="/products/:categoryId/:categoryName" element={<Products/>}/>
+          <Route path="/product/:categoryId/:categoryName" element={<Products/>}/>
            <Route path="/product-details/:id/:name" element={<ProductsDetails/>}/>
             <Route path="/profile" element={!token ? <Navigate to="/authorization" /> : <Profile />}/>
             <Route path="/favorite" element={!token ? <Navigate to="/authorization" /> : <Favorite />}/>
