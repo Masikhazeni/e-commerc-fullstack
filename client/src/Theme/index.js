@@ -19,6 +19,7 @@ const lightTheme = createTheme({
       buttom: "red", // بنفش تیره تر
       box:'#9EC9E8',
       err: "#841E96",
+      card:'#ffffff'
     },
   },
 });
@@ -41,6 +42,7 @@ const darkTheme = createTheme({
       buttom: "#D15828", // بنفش تیره تر
       box:'#858F99',
       err: "#ED0202",
+      card:'#666666'
     },
   },
 });

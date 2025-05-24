@@ -7,20 +7,15 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import {
-  EffectFade,
-  Autoplay,
-  Navigation,
-  Pagination,
-} from "swiper/modules";
+import { EffectFade, Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import fetchData from "../../../Utils/fetchData";
 import { useNavigate } from "react-router-dom";
 
 export default function MainSlider() {
   const [slider, setSlider] = useState([]);
-  const navigate=useNavigate()
-  const theme=useTheme()
+  const navigate = useNavigate();
+  const theme = useTheme();
 
   useEffect(() => {
     (async () => {
@@ -34,7 +29,7 @@ export default function MainSlider() {
   }, []);
 
   return (
-    <Box sx={{ width: "100%", height: "100vh", position: "relative" }}>
+    <Box sx={{ width: "100%", height: "100vh", position: "relative",mt:{xs:'90px',md:'130px'} }}>
       <Swiper
         spaceBetween={0}
         effect="fade"
@@ -66,7 +61,7 @@ export default function MainSlider() {
                   width: "100%",
                   height: "100%",
                   objectFit: "cover",
-                  objectPosition: "top",
+                  objectPosition: "center",
                 }}
               />
 
@@ -88,20 +83,18 @@ export default function MainSlider() {
                   {e.title}
                 </Typography>
                 <Box
-                component={'button'}
+                  component={"button"}
                   variant="contained"
                   color="primary"
-                  
-                  onClick={()=>navigate(`${e.href}`)}
-                  
+                  onClick={() => navigate(`${e.href}`)}
                   sx={{
                     mt: 2,
                     borderRadius: "999px",
                     px: 4,
                     py: 1.5,
                     fontSize: "1rem",
-                    backgroundColor:theme.palette.secondary.main,
-                    
+                    backgroundColor: theme.palette.secondary.main,
+
                     boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
                   }}
                 >
@@ -115,4 +108,3 @@ export default function MainSlider() {
     </Box>
   );
 }
-

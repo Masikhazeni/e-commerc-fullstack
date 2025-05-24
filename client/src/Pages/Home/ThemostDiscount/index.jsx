@@ -42,7 +42,7 @@ export default function ThemostDiscount() {
 
   // Get products with high discount variants
   const highDiscountProducts = products.filter(product => 
-    variants.some(variant => variant.productId === product._id)
+    variants.some(variant => variant.productId._id === product._id)
   );
 
   const handleSwiperReady = (swiper) => {
@@ -54,7 +54,7 @@ export default function ThemostDiscount() {
 
   const items = highDiscountProducts.map((product) => {
     // Find the variant with highest discount for this product
-    const productVariants = variants.filter(v => v.productId === product._id);
+    const productVariants = variants.filter(v => v.productId._id === product._id);
     const highestDiscountVariant = productVariants.reduce((prev, current) => 
       (prev.discount > current.discount) ? prev : current
     );
