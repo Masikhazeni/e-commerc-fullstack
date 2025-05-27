@@ -33,9 +33,9 @@ export default function ProductDetails() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { token, user } = useSelector((state) => state.auth);
+  console.log({token,user})
   const theme = useTheme();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
 
   useEffect(() => {
@@ -521,39 +521,47 @@ export default function ProductDetails() {
             <Box
               key={index}
               sx={{
-                width: "400px",
-                height: "400px",
+                width: "310px",
+                height: "210px",
                 display: "flex",
                 alignItems: "center",
-                gap: 2,
+                flexDirection:'column',
+                justifyContent:'space-between',
                 p: 2,
                 borderRadius: 2,
-                backgroundColor: "#f9f9f9",
+                backgroundColor: theme.palette.background.box,
                 mb: 2,
                 boxShadow: 1,
+                border:`5px solid ${theme.palette.primary.main}`
               }}
             >
-              <Box>
-                <Typography
+             
+                <Box sx={{width:'100%',height:'20px'}}>
+                  <Typography
                   variant="body2"
                   sx={{ color: theme.palette.primary.main }}
                 >
                   {comment?.userId?.username || "بی نام"}
                 </Typography>
-                <Typography
+                </Box>
+               <Box sx={{width:'100%',height:'150px',my:'5px'}}>
+                 <Typography
                   variant="body2"
                   sx={{ color: theme.palette.primary.main }}
                 >
                   {comment.content}
                 </Typography>
-                <Typography
+               </Box>
+               <Box sx={{width:'100%',height:'20px'}}>
+                 <Typography
                   variant="caption"
                   sx={{ color: theme.palette.primary.main }}
                 >
                   {new Date(comment.createdAt).toLocaleString()}
                 </Typography>
+               </Box>
               </Box>
-            </Box>
+           
           ))
         ) : (
           <Typography variant="body2" sx={{ color: theme.palette.text.third }}>
