@@ -37,10 +37,10 @@ const GetAllComments = () => {
         setLoading(false);
       }
     };
-
+    
     fetchComments();
-  }, [currentPage, itemsPerPage]);
-
+  }, [currentPage, itemsPerPage, token]);
+console.log(comments)
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
   const handleItemsPerPageChange = (e) => {
@@ -49,10 +49,10 @@ const GetAllComments = () => {
   };
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("آیا از حذف این نظر اطمینان دارید؟");
-    if (!confirmDelete) return;
-
     try {
+      const confirmDelete = window.confirm("آیا از حذف این نظر مطمئن هستید؟");
+      if (!confirmDelete) return;
+
       const response = await fetchData(`comment/${id}`, {
         method: "DELETE",
         headers: {
@@ -77,7 +77,6 @@ const GetAllComments = () => {
         headers: {
           authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ isActive: !comment.isActive }),
       });
 
       if (response.success) {
@@ -112,33 +111,51 @@ const GetAllComments = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 text-right" dir="rtl">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">همه‌ی نظرات</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">مدیریت نظرات</h1>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">متن</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">کاربر</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">محصول</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">پاسخ</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">وضعیت</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">تاریخ</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">عملیات</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  متن نظر
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  کاربر
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  محصول
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  پاسخ
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  وضعیت
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  تاریخ ایجاد
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  عملیات
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {comments.map((comment) => (
                 <tr key={comment._id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 text-sm text-gray-900">{comment.content}</td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
-                    {comment.userId?.username || comment.userId?.phoneNumber || "ناشناخته"}
+                  <td className="px-6 py-4 text-sm text-gray-900">
+                    {comment.content}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {comment.productId?.title || "ناشناخته"}
+                    {comment.userId?.username || comment.userId?.phoneNumber || "ناشناس"}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">{comment.reply || "-"}</td>
+                  <td className="px-6 py-4 text-sm text-gray-500">
+                    {comment.productId?.title || "ناشناس"}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-500">
+                    {comment.reply || "-"}
+                  </td>
                   <td className="px-6 py-4">
                     <button
                       onClick={(e) => {
@@ -224,7 +241,7 @@ const GetAllComments = () => {
       </div>
 
       {comments.length === 0 && !loading && (
-        <div className="text-center text-gray-500 mt-8">هیچ نظری یافت نشد</div>
+        <div className="text-center text-gray-500 mt-8">نظری یافت نشد</div>
       )}
     </div>
   );

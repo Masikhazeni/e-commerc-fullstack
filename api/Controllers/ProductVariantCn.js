@@ -17,7 +17,7 @@ export const getAll = catchAsync(async (req, res, next) => {
     .sort()
     .limitFields()
     .paginate()
-    .populate('productId ')
+    .populate('productId , variantId ')
     const data=await features.execute()
     return res.status(200).json(data);
 });
