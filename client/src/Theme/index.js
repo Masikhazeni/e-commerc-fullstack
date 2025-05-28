@@ -10,7 +10,7 @@ const lightTheme = createTheme({
     text: {
       primary: "#FFFFFF", // سفید
       secondary: "#273F4F", // بنفش خیلی تیره
-      third: "#000000", // مشکی
+      third: "#273F4F", // مشکی
     },
     background: {
       default: "#ffffff", // سفید

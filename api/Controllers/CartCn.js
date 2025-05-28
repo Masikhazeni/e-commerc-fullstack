@@ -3,7 +3,7 @@ import ProductVariant from "../Models/ProductVariantMd.js";
 import catchAsync from "../Utils/catchAsync.js";
 
 export const add = catchAsync(async (req, res, next) => {
-  const { productVariantId, productId, categoryId,quantity } = req?.body;
+  const { productVariantId, productId, categoryId,quantity} = req?.body;
   let add = false;
   const pr = await ProductVariant.findById(productVariantId);
   const userId = req.userId;
@@ -69,7 +69,7 @@ export const clear = catchAsync(async (req, res, next) => {
 });
 export const getUserCart = catchAsync(async (req, res, next) => {
   const userId = req.userId;
-  const cart = await Cart.findOne({ userId });
+  const cart = await Cart.findOne({ userId }).populate('items.productId items.productVariantId')
   return res.status(200).json({
     success: true,
     data: cart,
