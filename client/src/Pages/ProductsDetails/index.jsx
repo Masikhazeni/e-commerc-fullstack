@@ -8,9 +8,9 @@ import {
   useTheme,
   Divider,
   TextField,
+  Avatar,
 } from "@mui/material";
-import mongoose from "mongoose";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import fetchData from "../../Utils/fetchData";
 import AddIcon from "@mui/icons-material/Add";
@@ -20,6 +20,12 @@ import { useSelector } from "react-redux";
 import notify from "../../Utils/notify";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import Comment from "./Comment";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -33,10 +39,11 @@ export default function ProductDetails() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { token, user } = useSelector((state) => state.auth);
-  console.log({token,user})
+  console.log({ token, user });
   const theme = useTheme();
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -105,7 +112,8 @@ export default function ProductDetails() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetchData(`comment?productId=${id}&isActive=true`);
+      const res = await fetchData(`comment/product/${id}?isActive=true&limit=1000&sort=-updatedAt`);
+      console.log(res.data);
       setComments(res?.data || []);
     })();
   }, [id]);
@@ -144,7 +152,7 @@ export default function ProductDetails() {
             Authorization: `Bearer ${token}`,
           },
         });
-       
+
         if (res?.success) {
           const favoriteIds = res.data.map((p) => String(p._id));
           setIsFavorite(favoriteIds.includes(id));
@@ -155,47 +163,52 @@ export default function ProductDetails() {
   }, [id, user]);
 
   // تابع toggleFavorite
- const handleToggleFavorite = async () => {
-  if (!token) {
-    notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "warning");
-    return;
-  }
-
-  if (favoriteLoading) return;
-
-  setFavoriteLoading(true);
-  try {
-    const res = await fetchData(`user/favorites`, {
-      method: "POST", // ✅ درستش اینه
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ productId: id }), // ✅ id رو توی body بفرست
-    });
-
-    if (res?.success) {
-      const newStatus = !isFavorite;
-      setIsFavorite(newStatus);
-      notify(
-        newStatus
-          ? "محصول به علاقه‌مندی‌ها اضافه شد"
-          : "محصول از علاقه‌مندی‌ها حذف شد",
-        "success"
-      );
-    } else {
-      notify(res?.message || "خطا در بروزرسانی علاقه‌مندی‌ها", "error");
+  const handleToggleFavorite = async () => {
+    if (!token) {
+      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "warning");
+      return;
     }
-  } catch (error) {
-    console.error(error);
-    notify("خطا در بروزرسانی علاقه‌مندی‌ها", "error");
-  } finally {
-    setFavoriteLoading(false);
-  }
-};
+
+    if (favoriteLoading) return;
+
+    setFavoriteLoading(true);
+    try {
+      const res = await fetchData(`user/favorites`, {
+        method: "POST", // ✅ درستش اینه
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId: id }), // ✅ id رو توی body بفرست
+      });
+
+      if (res?.success) {
+        const newStatus = !isFavorite;
+        setIsFavorite(newStatus);
+        notify(
+          newStatus
+            ? "محصول به علاقه‌مندی‌ها اضافه شد"
+            : "محصول از علاقه‌مندی‌ها حذف شد",
+          "success"
+        );
+      } else {
+        notify(res?.message || "خطا در بروزرسانی علاقه‌مندی‌ها", "error");
+      }
+    } catch (error) {
+      console.error(error);
+      notify("خطا در بروزرسانی علاقه‌مندی‌ها", "error");
+    } finally {
+      setFavoriteLoading(false);
+    }
+  };
 
 
-  
+  const items= comments?.map((comment, index) => (
+          <SwiperSlide key={index}>
+            <Comment username={comment?.userId?.username} date={comment.createdAt} content={comment.content}/>
+          </SwiperSlide>
+        ))
+
   return (
     <>
       <Box sx={{ pb: "40px" }}>
@@ -510,123 +523,152 @@ export default function ProductDetails() {
 
       {/* بخش نظرات */}
       <Box mt={4}>
-        <Typography variant="h5" fontWeight="bold" mb={2}>
-          نظرات کاربران
-        </Typography>
-        <Divider sx={{ mb: 3 }} />
+  {/* تیتر بخش نظرات */}
+  <Typography
+    variant="h5"
+    fontWeight="bold"
+    mb={2}
+    sx={{
+      color: theme.palette.background.buttom,
+      textAlign: "center",
+    }}
+  >
+    نظرات کاربران
+  </Typography>
 
-        {/* نمایش نظرات */}
-        {comments?.length > 0 ? (
-          comments.map((comment, index) => (
-            <Box
-              key={index}
-              sx={{
-                width: "310px",
-                height: "210px",
-                display: "flex",
-                alignItems: "center",
-                flexDirection:'column',
-                justifyContent:'space-between',
-                p: 2,
-                borderRadius: 2,
-                backgroundColor: theme.palette.background.box,
-                mb: 2,
-                boxShadow: 1,
-                border:`5px solid ${theme.palette.primary.main}`
-              }}
-            >
-             
-                <Box sx={{width:'100%',height:'20px'}}>
-                  <Typography
-                  variant="body2"
-                  sx={{ color: theme.palette.primary.main }}
-                >
-                  {comment?.userId?.username || "بی نام"}
-                </Typography>
-                </Box>
-               <Box sx={{width:'100%',height:'150px',my:'5px'}}>
-                 <Typography
-                  variant="body2"
-                  sx={{ color: theme.palette.primary.main }}
-                >
-                  {comment.content}
-                </Typography>
-               </Box>
-               <Box sx={{width:'100%',height:'20px'}}>
-                 <Typography
-                  variant="caption"
-                  sx={{ color: theme.palette.primary.main }}
-                >
-                  {new Date(comment.createdAt).toLocaleString()}
-                </Typography>
-               </Box>
-              </Box>
-           
-          ))
-        ) : (
-          <Typography variant="body2" sx={{ color: theme.palette.text.third }}>
+  <Divider sx={{ mb: 4, mx: "auto", width: "60%" }} />
+
+  {/* فرم ارسال نظر */}
+  <Box
+    component="form"
+    onSubmit={handleSubmitComment}
+    sx={{
+      backgroundColor: theme.palette.background.box,
+      borderRadius: 4,
+      p: { xs: 2, sm: 3 },
+      mb: 4,
+      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+      width: { xs: "95%", sm: "90%", md: "80%" },
+      mx: "auto",
+    }}
+  >
+    <Typography
+      variant="subtitle1"
+      fontWeight="medium"
+      mb={2}
+      sx={{ color: theme.palette.primary.dark }}
+    >
+      ثبت نظر شما
+    </Typography>
+
+    <TextField
+      fullWidth
+      multiline
+      rows={4}
+      variant="outlined"
+      placeholder="نظر خود را بنویسید..."
+      value={newComment}
+      onChange={(e) => setNewComment(e.target.value)}
+      sx={{
+        backgroundColor: theme.palette.background.paper,
+        borderRadius: 2,
+        mb: 2,
+        "& .MuiInputBase-input": {
+          color: theme.palette.text.secondary,
+        },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: theme.palette.divider,
+          },
+          "&:hover fieldset": {
+            borderColor: theme.palette.primary.main,
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: theme.palette.primary.dark,
+          },
+        },
+        "& .MuiInputBase-input::placeholder": {
+          color: theme.palette.text.secondary,
+          opacity: 0.9,
+        },
+      }}
+    />
+
+    <Button
+      type="submit"
+      disabled={!token || loading}
+      variant="contained"
+      color="primary"
+      fullWidth
+      sx={{
+        borderRadius: 2,
+        py: 1.5,
+        fontSize: "1rem",
+        fontWeight: 600,
+        transition: "all .4s ease",
+        "&:hover": {
+          transform: "scale(1.05)",
+          boxShadow: `0 0 15px ${theme.palette.primary.light}`,
+        },
+      }}
+    >
+      {token
+        ? loading
+          ? "در حال ارسال..."
+          : "ارسال نظر"
+        : "ابتدا وارد شوید"}
+    </Button>
+  </Box>
+
+  {/* لیست نظرات در Swiper */}
+  <Box
+    sx={{
+      display: "flex",
+      width: "100%",
+      px: { xs: "2%", sm: "4%", md: "5%" },
+      gap: "10px",
+    }}
+  >
+    <Swiper
+      modules={[Navigation, Pagination]}
+      spaceBetween={20}
+      navigation
+      pagination={{ clickable: true }}
+      breakpoints={{
+        0: { slidesPerView: 1 },
+        600: { slidesPerView: 1.2 },
+        768: { slidesPerView: 1.6 },
+        900: { slidesPerView: 2 },
+        1150: { slidesPerView: 2.8 },
+        1500: { slidesPerView: 3.5 },
+        1600: { slidesPerView: 4.5 },
+      }}
+      style={{
+        width: "100%",
+        padding: "20px 0 40px",
+        position: "relative",
+      }}
+    >
+      {comments?.length > 0 ? (
+        items
+      ) : (
+        <SwiperSlide>
+          <Typography
+            variant="body2"
+            sx={{ color: theme.palette.text.secondary, mt: 2 }}
+          >
             هنوز نظری ثبت نشده است.
           </Typography>
-        )}
+        </SwiperSlide>
+      )}
+    </Swiper>
+  </Box>
+</Box>
 
-        {/* فرم ارسال نظر */}
-        <Box component="form" onSubmit={handleSubmitComment} mt={3}>
-          <TextField
-            fullWidth
-            multiline
-            rows={3}
-            variant="outlined"
-            placeholder="نظر خود را بنویسید..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            sx={{
-              backgroundColor: "#fff",
-              borderRadius: 2,
-
-              "& .MuiInputBase-input": {
-                color: "#000",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#ccc",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#888",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#0d9488",
-                },
-              },
-              "& .MuiInputBase-input::placeholder": {
-                color: "#000",
-                opacity: 1,
-              },
-            }}
-          />
-
-          <Button
-            type="submit"
-            disabled={!token || loading}
-            variant="contained"
-            color="primary"
-            sx={{
-              mt: 2,
-              borderRadius: 2,
-
-              py: 1.5,
-              fontSize: "1rem",
-              transition: "all .5s",
-              "&:hover": { transform: "scale(1.1)" },
-            }}
-          >
-            {token
-              ? loading
-                ? "در حال ارسال..."
-                : "ارسال نظر"
-              : "ابتدا وارد شوید"}
-          </Button>
-        </Box>
-      </Box>
+      
     </>
   );
 }
+
+
+

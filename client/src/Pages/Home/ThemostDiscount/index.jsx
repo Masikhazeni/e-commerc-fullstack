@@ -7,7 +7,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import MoreDiscountProduct from "./moreDiscountProduct";
-
 export default function ThemostDiscount() {
   const [products, setProducts] = useState([]);
   const [variants, setVariants] = useState([]);
