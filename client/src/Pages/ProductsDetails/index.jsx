@@ -88,7 +88,8 @@ export default function ProductDetails() {
         .map((v) => v.variantId.value)
     ),
   ];
-
+ 
+ 
   const increaseQuantity = () => {
     if (selectedVariant && quantity < selectedVariant.quantity) {
       setQuantity((prev) => prev + 1);
@@ -101,14 +102,39 @@ export default function ProductDetails() {
     }
   };
 
-  const handleAddToCart = () => {
-    if (selectedVariant && quantity <= selectedVariant.quantity) {
-      console.log("افزودن به سبد خرید", {
-        variantId: selectedVariant._id,
-        quantity,
-      });
+ const handleAddToCart = async () => {
+  if (!token) {
+    notify("برای افزودن به سبد خرید ابتدا وارد شوید", "warning");
+    return;
+  }
+
+  if (!selectedVariant || !isInStock) return;
+
+  try {
+    const res = await fetchData('cart', {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: id,
+        productVariantId: selectedVariant._id,
+        categoryId: product.categoryId._id,
+        quantity: quantity // اختیاری - بستگی به منطق بکند دارد
+      }),
+    });
+
+    if (res?.success) {
+      notify("محصول با موفقیت به سبد خرید اضافه شد", "success");
+    } else {
+      notify(res?.message || "خطا در افزودن به سبد خرید", "error");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    notify("خطا در ارتباط با سرور", "error");
+  }
+};
 
   useEffect(() => {
     (async () => {

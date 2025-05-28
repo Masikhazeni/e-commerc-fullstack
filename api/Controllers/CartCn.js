@@ -3,15 +3,15 @@ import ProductVariant from "../Models/ProductVariantMd.js";
 import catchAsync from "../Utils/catchAsync.js";
 
 export const add = catchAsync(async (req, res, next) => {
-  const { productVariantId, productId, categoryId } = req?.body;
+  const { productVariantId, productId, categoryId,quantity } = req?.body;
   let add = false;
   const pr = await ProductVariant.findById(productVariantId);
   const userId = req.userId;
   const cart = await Cart.findOne({ userId });
   cart.items = cart.items.map((item) => {
     if (item.productVariantId.toString() == productVariantId) {
-      item.quantity = item.quantity + 1;
-      cart.totalPrice = cart.totalPrice + item.finalPrice;
+      item.quantity = item.quantity + quantity;
+      cart.totalPrice = cart.totalPrice + item.finalPrice*quantity;
       add = true;
     }
     return item;
@@ -21,10 +21,10 @@ export const add = catchAsync(async (req, res, next) => {
       productVariantId,
       productId,
       categoryId,
-      quantity: 1,
+      quantity,
       finalPrice: pr.priceAfterDiscount,
     });
-    cart.totalPrice += +pr.priceAfterDiscount;
+    cart.totalPrice += +pr.priceAfterDiscount *quantity;
   }
   const newCart = await cart.save();
   return res.status(200).json({
