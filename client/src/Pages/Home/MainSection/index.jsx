@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import fetchData from "../../../Utils/fetchData";
+import { useNavigate } from "react-router-dom";
 
 export default function MainSection() {
   const [parents, setParents] = useState([]);
   const theme = useTheme();
+  const navigate=useNavigate()
 
   useEffect(() => {
     (async () => {
@@ -16,6 +18,7 @@ export default function MainSection() {
   const items = parents?.map((e, index) => (
     <Box
       key={index}
+      onClick={() => navigate(`/brands/${e._id}/${e.name.replaceAll(" ", "-")}`)}
       sx={{
         width: {
           xs: "150px", // موبایل

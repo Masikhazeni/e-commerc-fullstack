@@ -18,13 +18,15 @@ import {
   Cart,
   NotFound,
   About,Favorite,
-  CheckPass
+  CheckPass,
+ 
 } from "./Pages";
 
 import { darkTheme, lightTheme } from "./Theme";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import { login } from "./Store/Slices/AuthSlice";
+import Brands from "./Pages/Brands";
 
 
 export default function App() {
@@ -64,6 +66,7 @@ export default function App() {
             <Route path="forget-pass" element={<ForgetPass />} />
           </Route>
           <Route path="/product/:categoryId/:categoryName" element={<Products/>}/>
+          <Route path="/brands/:idBrand/:brandName" element={<Brands/>}/>
            <Route path="/product-details/:id/:name" element={<ProductsDetails/>}/>
             <Route path="/profile" element={!token ? <Navigate to="/authorization" /> : <Profile />}/>
             <Route path="/favorite" element={!token ? <Navigate to="/authorization" /> : <Favorite />}/>
