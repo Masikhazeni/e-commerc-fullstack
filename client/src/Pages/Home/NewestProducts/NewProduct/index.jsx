@@ -10,12 +10,20 @@ import {
   IconButton,
   useTheme,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+import notify from "../../../../Utils/notify";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function NewProduct({ title, image, id }) {
   const [variant, setVariant] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
   const theme = useTheme();
+  const { token, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    // دریافت جدیدترین واریانت محصول
     (async () => {
       try {
         const res = await fetchData(`product-variant?productId=${id}`);
@@ -31,6 +39,64 @@ export default function NewProduct({ title, image, id }) {
     })();
   }, [id]);
 
+  useEffect(() => {
+    // بررسی علاقه‌مندی کاربر
+    const checkFavoriteStatus = async () => {
+      if (user && token) {
+        const res = await fetchData("user/favorites", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res?.success) {
+          const favoriteIds = res.data.map((p) => String(p._id));
+          setIsFavorite(favoriteIds.includes(id));
+        }
+      }
+    };
+    checkFavoriteStatus();
+  }, [id, token, user]);
+
+  const handleToggleFavorite = async () => {
+    if (!token) {
+      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "warning");
+      return;
+    }
+
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const res = await fetchData("user/favorites", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId: id }),
+      });
+
+      if (res?.success) {
+        const newStatus = !isFavorite;
+        setIsFavorite(newStatus);
+        notify(
+          newStatus
+            ? "محصول به علاقه‌مندی‌ها اضافه شد"
+            : "محصول از علاقه‌مندی‌ها حذف شد",
+          "success"
+        );
+      } else {
+        notify(res?.message || "خطا در بروزرسانی علاقه‌مندی‌ها", "error");
+      }
+    } catch (error) {
+      console.error(error);
+      notify("خطا در بروزرسانی علاقه‌مندی‌ها", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const hasDiscount = variant?.discount > 0;
 
   return (
@@ -43,7 +109,7 @@ export default function NewProduct({ title, image, id }) {
       <Card
         sx={{
           width: 230,
-          height: 350 /* ارتفاع ثابت */,
+          height: 350,
           borderRadius: 3,
           boxShadow: 2,
           overflow: "hidden",
@@ -54,16 +120,37 @@ export default function NewProduct({ title, image, id }) {
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        {/* تصویر و آیکون‌ها */}
-        <Box sx={{ position: "relative" ,padding:'5px'}}>
+        <Box sx={{ position: "relative", padding: "5px" }}>
+          {/* تصویر محصول */}
           <Box
             component="img"
             src={`${import.meta.env.VITE_BASE_URL + image}`}
             alt={title}
-            sx={{ width: "100%", height:'200px' }}
+            sx={{ width: "100%", height: "200px", objectFit: "contain" }}
           />
 
-          {/* تخفیف */}
+          {/* آیکون علاقه‌مندی */}
+          <IconButton
+            onClick={handleToggleFavorite}
+            disabled={loading}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              zIndex: 2,
+              color: isFavorite ? "red" : theme.palette.text.secondary,
+              backgroundColor: "rgba(255,255,255,0.8)",
+              transition:'all .5s',
+              "&:hover": {
+                transform: "scale(1.2)",
+                backgroundColor: "rgba(255,255,255,1)",
+              },
+            }}
+          >
+            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </IconButton>
+
+          {/* نشان تخفیف */}
           {hasDiscount && (
             <Box
               sx={{
@@ -149,6 +236,9 @@ export default function NewProduct({ title, image, id }) {
               mt: 1,
               borderRadius: 2,
               backgroundColor: theme.palette.background.buttom,
+              "&:hover": {
+                backgroundColor: theme.palette.background.buttomHover,
+              },
             }}
           >
             مشاهده محصول

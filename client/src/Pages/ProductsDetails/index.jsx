@@ -43,7 +43,7 @@ export default function ProductDetails() {
   const theme = useTheme();
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
-  const swiperRef = useRef(null);
+ 
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -461,8 +461,8 @@ export default function ProductDetails() {
                           cursor: "pointer",
                           border:
                             selectedVariant?.variantId?.value === color
-                              ? "3px solid black"
-                              : "1px solid gray",
+                              ? `3px solid ${theme.palette.text.primary}`
+                              : `1px solid ${theme.palette.primary.main}`,
                         }}
                         onClick={() => handleColorSelect(color)}
                       />

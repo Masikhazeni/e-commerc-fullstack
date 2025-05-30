@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -6,11 +6,79 @@ import {
   CardContent,
   Typography,
   Button,
+  IconButton,
   useTheme,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+import notify from "../../../../Utils/notify";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import fetchData from "../../../../Utils/fetchData";
 
 export default function MoreDiscountProduct({ title, image, id, variantData }) {
   const theme = useTheme();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { token, user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      if (user && token) {
+        const res = await fetchData("user/favorites", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res?.success) {
+          const favoriteIds = res.data.map((p) => String(p._id));
+          setIsFavorite(favoriteIds.includes(id));
+        }
+      }
+    };
+    checkFavoriteStatus();
+  }, [id, token, user]);
+
+  const handleToggleFavorite = async () => {
+    if (!token) {
+      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "warning");
+      return;
+    }
+
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const res = await fetchData("user/favorites", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId: id }),
+      });
+
+      if (res?.success) {
+        const newStatus = !isFavorite;
+        setIsFavorite(newStatus);
+        notify(
+          newStatus
+            ? "محصول به علاقه‌مندی‌ها اضافه شد"
+            : "محصول از علاقه‌مندی‌ها حذف شد",
+          "success"
+        );
+      } else {
+        notify(res?.message || "خطا در بروزرسانی علاقه‌مندی‌ها", "error");
+      }
+    } catch (error) {
+      console.error(error);
+      notify("خطا در بروزرسانی علاقه‌مندی‌ها", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const hasDiscount = variantData?.discount > 0;
 
   return (
     <Box
@@ -33,7 +101,7 @@ export default function MoreDiscountProduct({ title, image, id, variantData }) {
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        {/* Image and discount badge */}
+        {/* تصویر و آیکون‌ها */}
         <Box sx={{ position: "relative", padding: "5px" }}>
           <Box
             component="img"
@@ -42,8 +110,28 @@ export default function MoreDiscountProduct({ title, image, id, variantData }) {
             sx={{ width: "100%", height: "200px", objectFit: "contain" }}
           />
 
-          {/* Discount badge */}
-          {variantData?.discount && (
+          {/* آیکون علاقه‌مندی */}
+          <IconButton
+            onClick={handleToggleFavorite}
+            disabled={loading}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              zIndex: 2,
+              color: isFavorite ? "red" : theme.palette.text.secondary,
+              backgroundColor: "rgba(255,255,255,0.8)",
+              "&:hover": {
+                transform: "scale(1.2)",
+                backgroundColor: "rgba(255,255,255,1)",
+              },
+            }}
+          >
+            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </IconButton>
+
+          {/* نشان تخفیف */}
+          {hasDiscount && (
             <Box
               sx={{
                 position: "absolute",
@@ -66,7 +154,7 @@ export default function MoreDiscountProduct({ title, image, id, variantData }) {
           )}
         </Box>
 
-        {/* Content */}
+        {/* محتوا */}
         <CardContent
           sx={{
             flexGrow: 1,
@@ -101,7 +189,6 @@ export default function MoreDiscountProduct({ title, image, id, variantData }) {
               >
                 {variantData.price.toLocaleString()} تومان
               </Typography>
-
               <Typography
                 sx={{
                   fontWeight: "600",

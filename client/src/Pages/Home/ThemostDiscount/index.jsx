@@ -6,7 +6,7 @@ import fetchData from "../../../Utils/fetchData";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import MoreDiscountProduct from "./moreDiscountProduct";
+import MoreDiscountProduct from "./MoreDiscountProduct";
 export default function ThemostDiscount() {
   const [products, setProducts] = useState([]);
   const [variants, setVariants] = useState([]);
@@ -72,7 +72,7 @@ export default function ThemostDiscount() {
         <MoreDiscountProduct 
           title={product.title} 
           image={product.imagesUrl?.[0]} 
-          id={highestDiscountVariant._id} 
+          id={product._id} 
           variantData={highestDiscountVariant}
         />
       </SwiperSlide>
