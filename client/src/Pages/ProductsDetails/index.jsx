@@ -328,7 +328,7 @@ export default function ProductDetails() {
                       width: 64,
                       height: 64,
                       border:
-                        mainImage === img
+                        mainImage !== img
                           ? "2px solid black"
                           : "1px solid #ccc",
                       borderRadius: 4,
@@ -461,8 +461,8 @@ export default function ProductDetails() {
                           cursor: "pointer",
                           border:
                             selectedVariant?.variantId?.value === color
-                              ? `3px solid ${theme.palette.text.primary}`
-                              : `1px solid ${theme.palette.primary.main}`,
+                            ? `1px solid ${theme.palette.background.buttom}`
+                              :`3px solid ${theme.palette.primary.main}`
                         }}
                         onClick={() => handleColorSelect(color)}
                       />
@@ -633,7 +633,7 @@ export default function ProductDetails() {
         fontWeight: 600,
         transition: "all .4s ease",
         "&:hover": {
-          transform: "scale(1.05)",
+          // transform: "scale(1.05)",
           boxShadow: `0 0 15px ${theme.palette.primary.light}`,
         },
       }}

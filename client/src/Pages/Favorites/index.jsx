@@ -4,6 +4,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useSelector } from "react-redux";
 import fetchData from "../../Utils/fetchData";
 import FavProduct from "./FavProduct";
+import EmptyFavorites from "./EmptyFavorites";
 
 export default function Favorite() {
   const theme = useTheme();
@@ -28,7 +29,7 @@ export default function Favorite() {
   };
 
   return (
-    <Box sx={{ minHeight: "80vh", mt: { xs: "80px", md: "130px" } }}>
+    <Box sx={{ Height: "80vh", mt: { xs: "80px", md: "130px" } }}>
       <Box
         sx={{
           width: "100%",
@@ -51,15 +52,21 @@ export default function Favorite() {
       </Box>
 
       {products.length === 0 ? (
-        <Typography
-          sx={{
-            mt: 5,
-            textAlign: "center",
-            color: theme.palette.text.secondary,
-          }}
-        >
-          لیست علاقه‌مندی‌های شما خالی است.
-        </Typography>
+        <Box
+                  sx={{
+                    width: { xs: "100%", md: "60%" },
+                    backgroundColor: theme.palette.background.box,
+                    borderRadius: 2,
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                   margin:'40px auto',
+                    gap: 2,
+                  }}
+                >
+                  <EmptyFavorites/>
+                </Box>
+        
       ) : (
         <Box
           sx={{
