@@ -87,7 +87,7 @@ export default function Brands() {
   const [page, setPage] = useState(1);
   const [priceRange, setPriceRange] = useState([0, 0]);
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
