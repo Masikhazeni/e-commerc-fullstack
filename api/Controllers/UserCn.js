@@ -83,7 +83,7 @@ export const getFavorites = catchAsync(async (req, res, next) => {
   
   const user = await User.findById(userId).populate({
     path: 'favoriteProduct',
-    select: 'title price imagesUrl'
+    select: 'title defaultProductVariantId imagesUrl'
   });
 
   if (!user) {
