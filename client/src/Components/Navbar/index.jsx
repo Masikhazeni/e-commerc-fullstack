@@ -168,7 +168,9 @@ export default function Navbar() {
             position: "absolute",
             zIndex: 1000,
             width: "60%",
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.primary.main,
+            borderRadius:'10px',
+           border:`1px solid ${theme.palette.background.box} `,
             top: "110%",
             left: "50%",
             transform: "translateX(-50%)",
@@ -189,13 +191,13 @@ export default function Navbar() {
               sx={{
                 padding: "8px 12px",
                 display: "flex",
-                flexDirection: "row", // چیدمان افقی برای تصویر و متن
-                alignItems: "center", // وسط‌چین عمودی
-                justifyContent: "flex-start", // وسط‌چین افقی
+                flexDirection: "row", 
+                alignItems: "center", 
+                justifyContent: "center", 
                 gap: "10%",
 
-                width: "100%", // پر کردن عرض
-                color: theme.palette.text.secondary,
+                width: "100%", 
+                color: theme.palette.text.primary,
                 fontSize: "14px",
                 cursor: "pointer",
               }}
@@ -206,17 +208,7 @@ export default function Navbar() {
                 setOpenIndex(null);
               }}
             >
-              <Box
-                component="img"
-                src={`${import.meta.env.VITE_BASE_URL + child.image}`}
-                alt={`${child.name}`}
-                sx={{
-                  width: "70px",
-                  height: "70px",
-                 
-                  objectFit: "cover",
-                }}
-              />
+             
               <Box
                 sx={{
                   fontSize: "18px",
@@ -226,10 +218,9 @@ export default function Navbar() {
                 }}
               >
                 {child.name}
-                <span> </span>
-                <KeyboardArrowLeftIcon />
+               
               </Box>{" "}
-              {/* متن کنار تصویر */}
+              
             </Box>
           ))}
           {children.length === 0 && (
