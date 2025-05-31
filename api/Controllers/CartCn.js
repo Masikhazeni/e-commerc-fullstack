@@ -33,27 +33,55 @@ export const add = catchAsync(async (req, res, next) => {
     message: "add to cart successfully",
   });
 });
+// export const remove = catchAsync(async (req, res, next) => {
+//   const { productVariantId } = req?.body;
+//   const userId = req.userId;
+//   const cart = await Cart.findOne({ userId });
+//   cart.items = cart.items.filter((item) => {
+//     if (item.productVariantId.toString() == productVariantId) {
+//       item.quantity = item.quantity - 1;
+//       cart.totalPrice = cart.totalPrice - item.finalPrice;
+//       if (item.quantity == 0) {
+//         return false;
+//       }
+//     }
+//     return item;
+//   });
+//   const newCart = await cart.save();
+//   return res.status(200).json({
+//     success: true,
+//     data: newCart,
+//     message: "item removed successfully",
+//   });
+// });
 export const remove = catchAsync(async (req, res, next) => {
-  const { productVariantId } = req?.body;
+  const { productVariantId, removeAll } = req?.body;
   const userId = req.userId;
   const cart = await Cart.findOne({ userId });
+
   cart.items = cart.items.filter((item) => {
     if (item.productVariantId.toString() == productVariantId) {
-      item.quantity = item.quantity - 1;
-      cart.totalPrice = cart.totalPrice - item.finalPrice;
-      if (item.quantity == 0) {
-        return false;
+      if (removeAll || item.quantity === 1) {
+        cart.totalPrice -= item.finalPrice * item.quantity;
+        return false; // حذف کامل
+      } else {
+        item.quantity -= 1;
+        cart.totalPrice -= item.finalPrice;
       }
     }
-    return item;
+    return true;
   });
+
   const newCart = await cart.save();
   return res.status(200).json({
     success: true,
     data: newCart,
-    message: "item removed successfully",
+    message: removeAll ? "item deleted successfully" : "item removed successfully",
   });
 });
+
+
+
 export const clear = catchAsync(async (req, res, next) => {
   const userId = req.userId;
   const cart = await Cart.findOneAndUpdate(
