@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import fetchData from "../../Utils/fetchData";
 import EmptyCart from "./EmptyCart";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const theme = useTheme();
@@ -22,6 +23,7 @@ export default function Cart() {
   const [allVariants, setAllVariants] = useState([]);
   const [loading, setLoading] = useState(true);
   const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const fetchCart = async () => {
     try {
@@ -134,8 +136,21 @@ export default function Cart() {
             <CloseIcon fontSize="small" />
           </IconButton>
 
-          <Box sx={{width:'40%'}}>
-            <Typography fontWeight="bold" color={theme.palette.text.third} >
+          <Box sx={{ width: "40%" }}>
+            <Typography
+              fontWeight="bold"
+              color={theme.palette.text.third}
+              sx={{cursor:'pointer',"&:hover":{
+                color:theme.palette.background.buttom
+              }}}
+              onClick={() =>
+                navigate(
+                  `/product-details/${
+                    item.productId._id
+                  }/${item.productId.title.replaceAll(" ", "-")}`
+                )
+              }
+            >
               {item.productId.title}
             </Typography>
             <Typography color={theme.palette.text.third}>
@@ -161,8 +176,15 @@ export default function Cart() {
             src={`${
               import.meta.env.VITE_BASE_URL + item.productId.imagesUrl[0]
             }`}
-            sx={{ width: 80, height: 80 }}
+            sx={{ width: 80, height: 80,cursor:'pointer' }}
             alt={item.productId.title}
+            onClick={() =>
+                navigate(
+                  `/product-details/${
+                    item.productId._id
+                  }/${item.productId.title.replaceAll(" ", "-")}`
+                )
+              }
           />
 
           <Box
@@ -341,10 +363,10 @@ export default function Cart() {
                 backgroundColor: "#fff",
                 color: "green",
                 fontWeight: "bold",
-                 '&:hover': {
-    backgroundColor: 'green',
-    color:theme.palette.text.primary
-  },
+                "&:hover": {
+                  backgroundColor: "green",
+                  color: theme.palette.text.primary,
+                },
               }}
             >
               تکمیل خرید
