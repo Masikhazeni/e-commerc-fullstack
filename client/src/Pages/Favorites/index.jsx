@@ -29,7 +29,7 @@ export default function Favorite() {
   };
 
   return (
-    <Box sx={{ Height: "80vh", mt: { xs: "80px", md: "130px" } }}>
+    <Box sx={{ minHeight: "80vh", mt: { xs: "80px", md: "130px" } }}>
       <Box
         sx={{
           width: "100%",

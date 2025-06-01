@@ -4,7 +4,7 @@ import Product from "../Models/ProductsMd.js";
 import catchAsync from "../Utils/catchAsync.js";
 export const search = catchAsync(async (req, res, next) => {
   const { query } = req.body;
-  const { limit = 10, page = 1 } = req?.query;
+  const { limit = 5, page = 1 } = req?.query;
   const skip = (page - 1) * limit;
   const products = await Product.find({
     title: { $regex: query, $options: "i" },
