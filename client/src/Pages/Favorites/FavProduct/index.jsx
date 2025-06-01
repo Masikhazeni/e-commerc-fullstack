@@ -72,7 +72,7 @@ export default function FavProduct({ title, image, id, variantId, onRemove }) {
       <Card
         sx={{
           width: { xs: 160, sm: 180, md: 230 },
-          height: 350,
+          height: 360,
           borderRadius: 3,
           boxShadow: 2,
           overflow: "hidden",
@@ -90,7 +90,7 @@ export default function FavProduct({ title, image, id, variantId, onRemove }) {
             alt={title}
             sx={{
               width: "100%",
-              height: 200,
+              height: '200px',
               objectFit: "contain",
             }}
           />

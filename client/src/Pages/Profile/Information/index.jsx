@@ -1,192 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import {
-//   Box,
-//   Typography,
-//   Button,
-//   Paper,
-//   Divider,
-//   Avatar,
-//   Stack,
-// } from "@mui/material";
-// import { useTheme } from "@emotion/react";
-// import { useSelector } from "react-redux";
-// import fetchData from "../../../Utils/fetchData";
-// import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-// import PersonIcon from "@mui/icons-material/Person";
-// import LocationOnIcon from "@mui/icons-material/LocationOn";
-// import EditIcon from "@mui/icons-material/Edit";
-
-// const InfoItem = ({ label, value }) => {
-//   const theme = useTheme();
-//   return (
-//     <Paper
-//       elevation={0}
-//       sx={{
-//         backgroundColor: theme.palette.background.box,
-//         px: 2,
-//         py: 1.5,
-//         borderRadius: 2,
-//         mb: 1.5,
-//       }}
-//     >
-//       <Typography variant="caption" color="text.secondary">
-//         {label}
-//       </Typography>
-//       <Typography variant="body1" fontWeight="bold" color="text.third">
-//         {value || "—"}
-//       </Typography>
-//     </Paper>
-//   );
-// };
-
-// export default function Information({ handlePageType }) {
-//   const theme = useTheme();
-//   const [userInfo, setUserInfo] = useState(null);
-//   const [address, setAddress] = useState(null);
-//   const { token, user } = useSelector((state) => state.auth);
-//   console.log(user);
-//   useEffect(() => {
-//     (async () => {
-//       const res = await fetchData(`user/${user.id}`, {
-//         method: "GET",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "application/json",
-//         },
-//       });
-//       setUserInfo(res.data);
-//     })();
-//   }, [token, user]);
-
-//   useEffect(() => {
-//     (async () => {
-//       const res = await fetchData(`address?userId=${user.id}`, {
-//         method: "GET",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "application/json",
-//         },
-//       });
-//       setAddress(res.data[0]);
-//     })();
-//   }, [token, user]);
-
-//   return (
-//     <Box
-//       sx={{ minHeight: "100vh", px: { xs: 2, md: 8 }, py: { xs: 10, md: 12 } }}
-//     >
-//       {/* Header */}
-//       <Box
-//         sx={{
-//           width: "100%",
-//           height: 50,
-//           mb: 4,
-//           borderBottom: `1px solid ${theme.palette.background.border}`,
-//           display: "flex",
-//           alignItems: "center",
-//         }}
-//       >
-//         <Typography
-//           variant="h6"
-//           color="text.secondary"
-//           sx={{ display: "flex", alignItems: "center", gap: 1 }}
-//         >
-//           پروفایل <ChevronLeftIcon fontSize="small" />
-//         </Typography>
-//       </Box>
-
-//       {/* Profile Content */}
-//       <Box
-//         sx={{
-//           width: "100%",
-//           maxWidth: 600,
-//           mx: "auto",
-//           bgcolor: theme.palette.background.paper,
-//           p: { xs: 3, md: 5 },
-//           borderRadius: 4,
-//           boxShadow: 4,
-//         }}
-//       >
-//         {/* Avatar */}
-//         <Box textAlign="center" mb={3}>
-//           <Avatar
-//             sx={{
-//               width: 80,
-//               height: 80,
-//               mx: "auto",
-//               mb: 1,
-//               bgcolor: theme.palette.background.box,
-//               color: theme.palette.text.secondary,
-//             }}
-//           >
-//             <PersonIcon fontSize="large" />
-//           </Avatar>
-//           <Typography variant="h6" color="text.secondary">
-//             اطلاعات کاربر
-//           </Typography>
-//         </Box>
-
-//         {/* User Info */}
-//         <Stack spacing={1}>
-//           <InfoItem label="نام کامل" value={userInfo?.fullname} />
-//           <InfoItem label="نام کاربری" value={userInfo?.username} />
-//           <InfoItem label="شماره تلفن" value={userInfo?.phoneNumber} />
-//         </Stack>
-        
-//         <Divider sx={{ my: 4 }} />
-
-//         {/* Address Section */}
-//         <Box display="flex" alignItems="center" gap={1} mb={2}>
-//           <LocationOnIcon color="primary" />
-//           <Typography variant="h6" color="text.secondary">
-//             آدرس
-//           </Typography>
-//         </Box>
-
-//         {address ? (
-//           <Stack spacing={1}>
-//             <InfoItem label="گیرنده" value={address.receiverName} />
-//             <InfoItem label="تلفن گیرنده" value={address.receiverPhoneNumber} />
-//             <InfoItem label="استان" value={address.province} />
-//             <InfoItem label="شهر" value={address.city} />
-//             <InfoItem label="خیابان" value={address.street} />
-//             <InfoItem label="کد پستی" value={address.postalCode} />
-//             <InfoItem label="پلاک" value={address.plaque} />
-//           </Stack>
-//         ) : (
-//           <Typography color="text.secondary">آدرسی ثبت نشده است.</Typography>
-//         )}
-
-//         {/* Edit Button */}
-//         <Box mt={4} textAlign="center">
-//           <Button
-//             variant="contained"
-//             startIcon={<EditIcon />}
-//             onClick={handlePageType}
-//             sx={{
-//               borderRadius: 3,
-//               px: 5,
-//               py: 1.2,
-//               fontWeight: "bold",
-//               backgroundColor: theme.palette.primary.main,
-//               "&:hover": {
-//                 backgroundColor: theme.palette.text.third,
-//               },
-//             }}
-//           >
-//             ویرایش اطلاعات
-//           </Button>
-//         </Box>
-//       </Box>
-//     </Box>
-//   );
-// }
-
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -203,7 +14,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditIcon from "@mui/icons-material/Edit";
-import InfoRow from "../InfoRow";
+import InfoRow from "./InfoRow";
 
 
 
@@ -240,13 +51,13 @@ export default function Information({ handlePageType }) {
 
   return (
     <Box
-     sx={{ minHeight: "80vh", mt: { xs: "80px", md: "130px" } ,mb:'40px'}}
+     sx={{ minHeight: "80vh", mt: { xs: "80px", md: "130px" } ,mb:'40px' }}
     >
       {/* Header */}
       <Box sx={{
           width: "100%",
           height: "50px",
-          px: { xs: "2px", md: "4%" },
+          px:{xs:'5%',md:'3%'},
           borderBottom: `1px solid ${theme.palette.background.border}`,
           mb:'40px'
         }}>
@@ -272,6 +83,7 @@ export default function Information({ handlePageType }) {
            background: `linear-gradient(145deg, ${theme.palette.background.paper}, ${theme.palette.background.box})`,
           borderRadius: 4,
           boxShadow: 3,
+          mx:{xs:'5%',md:'auto'}
         }}
       >
         {/* Avatar */}
@@ -348,7 +160,6 @@ export default function Information({ handlePageType }) {
         <Box mt={4} textAlign="center">
           <Button
             variant="contained"
-            startIcon={<EditIcon />}
             onClick={handlePageType}
             sx={{
               borderRadius: 3,

@@ -551,8 +551,8 @@ export default function ProductDetails() {
                         cursor: "pointer",
                         border:
                           selectedVariant?.variantId?.value === color
-                            ? `1px solid ${theme.palette.background.buttom}`
-                            : `3px solid ${theme.palette.primary.main}`
+                            ? `3px solid ${theme.palette.background.buttom}`
+                            : `1px solid ${theme.palette.primary.main}`
                       }}
                       onClick={() => handleColorSelect(color)}
                     />
@@ -774,9 +774,9 @@ export default function ProductDetails() {
                 <Typography
                   variant="body1"
                   sx={{
-                    textAlign: "center",
+                    textAlign: "start",
                     color: theme.palette.text.secondary,
-                    py: 4
+                    py: 4,
                   }}
                 >
                   هنوز نظری ثبت نشده است.

@@ -17,43 +17,9 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SaveIcon from "@mui/icons-material/Save";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import useFormFields from "../../../Utils/useFormFields";
+import EditField from "./EditField";
 
-const EditField = ({ label, name, value, onChange, sx }) => {
-  const theme = useTheme();
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 2,
-        p: 2,
-        mb: 1,
-        backgroundColor: theme.palette.background.default,
-        ...sx,
-      }}
-    >
-      <Typography variant="body2" color="text.secondary" sx={{ minWidth: 100 }}>
-        {label}
-      </Typography>
-      <TextField
-        name={name}
-        value={value || ""}
-        onChange={onChange}
-        variant="standard"
-        fullWidth
-        sx={{
-          maxWidth: "70%",
-          "& .MuiInputBase-input": {
-            textAlign: "left",
-            color: theme.palette.text.primary,
-          },
-        }}
-      />
-    </Box>
-  );
-};
+
 
 export default function Edit({ handlePageType }) {
   const theme = useTheme();
@@ -134,7 +100,7 @@ export default function Edit({ handlePageType }) {
         sx={{
           width: "100%",
           height: "50px",
-          px: { xs: "2px", md: "4%" },
+          px:{xs:'5%',md:'3%'},
           borderBottom: `1px solid ${theme.palette.background.border}`,
           mb: "40px",
         }}
@@ -156,11 +122,11 @@ export default function Edit({ handlePageType }) {
       <Box
         sx={{
           maxWidth: 800,
-          mx: "auto",
           p: { xs: 3, md: 5 },
           background: `linear-gradient(145deg, ${theme.palette.background.paper}, ${theme.palette.background.box})`,
           borderRadius: 4,
           boxShadow: 3,
+          mx:{xs:'5%',md:'auto'}
         }}
       >
         {/* Avatar */}
@@ -172,7 +138,7 @@ export default function Edit({ handlePageType }) {
               mx: "auto",
               mb: 1,
               bgcolor: theme.palette.primary.light,
-              color: theme.palette.primary.contrastText,
+              color: theme.palette.primary.main,
             }}
           >
             <PersonIcon fontSize="large" />
@@ -186,26 +152,26 @@ export default function Edit({ handlePageType }) {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 3 }}>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="نام کامل"
-              name="fullname"
+              label={"نام کامل"}
+              name={"fullname"}
               value={userFields.fullname || userInfo?.fullname}
               onChange={handleUserChange}
             />
           </Box>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="نام کاربری"
-              name="username"
+              label={"نام کاربری"}
+              name={"username"}
               value={userFields.username || userInfo?.username}
               onChange={handleUserChange}
             />
           </Box>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="شماره موبایل"
-              name="phoneNumber"
+              label={"شماره موبایل"}
+              name={"phoneNumber"}
               value={userFields.phoneNumber || userInfo?.phoneNumber}
-            //   onChange={handleUserChange}
+              onChange={''}
             />
           </Box>
         </Box>
@@ -223,16 +189,16 @@ export default function Edit({ handlePageType }) {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 3 }}>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="نام گیرنده"
-              name="receiverName"
+              label={"نام گیرنده"}
+              name={"receiverName"}
               value={addressFields.receiverName || address?.receiverName}
               onChange={handleAddressChange}
             />
           </Box>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="شماره تماس"
-              name="receiverPhoneNumber"
+              label={"شماره تماس"}
+              name={"receiverPhoneNumber"}
               value={
                 addressFields.receiverPhoneNumber ||
                 address?.receiverPhoneNumber
@@ -242,40 +208,40 @@ export default function Edit({ handlePageType }) {
           </Box>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="استان"
-              name="province"
+              label={"استان"}
+              name={"province"}
               value={addressFields.province || address?.province}
               onChange={handleAddressChange}
             />
           </Box>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="شهر"
-              name="city"
+              label={"شهر"}
+              name={"city"}
               value={addressFields.city || address?.city}
               onChange={handleAddressChange}
             />
           </Box>
           <Box sx={{ flex: "1 1 100%", minWidth: "200px" }}>
             <EditField
-              label="خیابان"
-              name="street"
+              label={"خیابان"}
+              name={"street"}
               value={addressFields.street || address?.street}
               onChange={handleAddressChange}
             />
           </Box>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="پلاک"
-              name="plaque"
+              label={"پلاک"}
+              name={"plaque"}
               value={addressFields.plaque || address?.plaque}
               onChange={handleAddressChange}
             />
           </Box>
           <Box sx={{ flex: "1 1 calc(50% - 16px)", minWidth: "200px" }}>
             <EditField
-              label="کد پستی"
-              name="postalCode"
+              label={"کد پستی"}
+              name={"postalCode"}
               value={addressFields.postalCode || address?.postalCode}
               onChange={handleAddressChange}
             />
@@ -306,7 +272,7 @@ export default function Edit({ handlePageType }) {
           </Button>
           <Button
             variant="contained"
-            startIcon={<SaveIcon />}
+            
             onClick={handleSubmit}
             sx={{
               borderRadius: 3,
