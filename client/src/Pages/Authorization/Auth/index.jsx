@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Paper, Typography, TextField, Button } from '@mui/material';
+import { Box, Paper, Typography, TextField, Button, useTheme } from '@mui/material';
 import notify from '../../../Utils/notify';
 import fetchData from '../../../Utils/fetchData';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Auth = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const navigate = useNavigate();
+  const theme=useTheme()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,21 +60,31 @@ const Auth = () => {
           maxWidth: 400,
         }}
       >
-        <Typography variant="h5" align="center" gutterBottom>
+        <Typography variant="h5" align="center" gutterBottom sx={{color: theme.palette.text.secondary }}>
           ورود
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit}>
+        <Box component="form" onSubmit={handleSubmit} sx={{color:theme.palette.text.secondary}}>
           <TextField
-            label="شماره موبایل"
-            type="tel"
-            fullWidth
-            margin="normal"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            placeholder="شماره موبایل خود را وارد کنید"
-            required
-          />
+  label="شماره موبایل"
+  type="tel"
+  fullWidth
+  margin="normal"
+  value={phoneNumber}
+  onChange={(e) => setPhoneNumber(e.target.value)}
+  placeholder="شماره موبایل خود را وارد کنید"
+  required
+  sx={{
+    '& .MuiInputBase-input': {
+      color: theme.palette.primary.main,
+      '&::placeholder': {
+        color: theme.palette.text.disabled,
+        opacity: 1,
+      },
+    },
+  }}
+/>
+
 
           <Button
             type="submit"

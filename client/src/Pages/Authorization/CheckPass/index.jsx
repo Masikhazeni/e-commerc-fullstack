@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Paper, Typography, TextField, Button } from "@mui/material";
+import { Box, Paper, Typography, TextField, Button, useTheme } from "@mui/material";
 import notify from "../../../Utils/notify";
 import fetchData from "../../../Utils/fetchData";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ const CheckPass = () => {
   const phoneNumber = localStorage.getItem("phoneNumber");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+   const theme=useTheme()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,13 +64,14 @@ const CheckPass = () => {
           borderRadius: 2,
           width: "100%",
           maxWidth: 400,
+          color: theme.palette.text.secondary 
         }}
       >
-        <Typography variant="h5" align="center" gutterBottom>
+        <Typography variant="h5" align="center" gutterBottom sx={{color: theme.palette.text.secondary }}>
           ورود با رمز عبور
         </Typography>
 
-        <Typography variant="body2" align="center" color="text.secondary">
+        <Typography variant="body2" align="center" color="text.secondary" sx={{color: theme.palette.text.secondary }}>
           شماره وارد شده: {phoneNumber}
         </Typography>
 
@@ -83,6 +85,10 @@ const CheckPass = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="رمز عبور خود را وارد کنید"
             required
+            sx={{
+            '& .MuiInputBase-input': {
+              color: theme.palette.primary.main, // رنگ متن تایپ شده
+            }}}
           />
 
           <Button

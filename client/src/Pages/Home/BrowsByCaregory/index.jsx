@@ -43,7 +43,8 @@ export default function BrowseByCategory() {
         alignItems: "center",
         justifyContent: "center",
         p: 1,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.primary.main,
+        border:`3px solid ${theme.palette.background.box} `,
         transition: "all 0.3s ease",
         cursor: "pointer",
         "&:hover": {
