@@ -4,8 +4,8 @@ import { search } from "../Controllers/SearchCn.js";
 /**
  * @swagger
  * tags:
- *   name: Search
- *   description: Search across products, brands, and categories
+ *   - name: Search
+ *     description: Search across products, brands, and categories
  */
 
 /**
@@ -68,6 +68,7 @@ import { search } from "../Controllers/SearchCn.js";
  *       400:
  *         description: Invalid request
  */
+
 /**
  * @swagger
  * components:
@@ -81,7 +82,10 @@ import { search } from "../Controllers/SearchCn.js";
  *           type: string
  *         price:
  *           type: number
- *         ...
+ *         description:
+ *           type: string
+ *         image:
+ *           type: string
  *     Brand:
  *       type: object
  *       properties:
