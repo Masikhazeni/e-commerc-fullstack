@@ -96,11 +96,13 @@ export default function NewestProducts() {
           ref={swiperRef}
           slidesPerView={6}
           spaceBetween={40}
-          breakpoints={{
+         breakpoints={{
             320: { slidesPerView: 1 },
             600: { slidesPerView: 2 },
             900: { slidesPerView: 3 },
-            1200: { slidesPerView: 5 },
+             1100: { slidesPerView: 3 },
+             1170: { slidesPerView: 3.5 },
+            1200: { slidesPerView: 4.5 },
           }}
           loop={products.length > 1}
           autoplay={{

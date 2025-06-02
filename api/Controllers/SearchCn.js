@@ -22,7 +22,6 @@ export const search = catchAsync(async (req, res, next) => {
     .sort("-createdAt")
     .skip(skip)
     .limit(limit);
-
     return res.status(200).json({
         data:{brands,categories,products},
         success:true

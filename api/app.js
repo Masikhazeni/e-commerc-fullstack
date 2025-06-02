@@ -20,6 +20,29 @@ import searchRouter from "./Routes/Search.js";
 import cartRouter from "./Routes/Cart.js";
 import authRouter from "./Routes/Auth.js";
 import reportRouter from "./Routes/Report.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from 'swagger-ui-express'
+
+const option={
+  definition:{
+    openapi:'3.0.0',
+    info:{
+      title:'Raya Plus E-commerce',
+      version:'1.0.0',
+      description:'final projecct'
+    },
+    server:[
+      {
+        url:'http://localhost:5000'
+      }
+    ]
+
+  },
+  apis:['./Routes/*.js']
+}
+
+const swaggerSpec=swaggerJSDoc(option)
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +51,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static("Public"));
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 app.use('/api/auth',authRouter)
 app.use('/api/address',isLogin,addressRouter)
 app.use('/api/user',userRouter)
