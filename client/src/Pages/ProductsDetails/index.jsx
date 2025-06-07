@@ -248,6 +248,7 @@ export default function ProductDetails() {
         username={comment?.userId?.username}
         date={comment.createdAt}
         content={comment.content}
+        reply={comment?.reply}
       />
     </SwiperSlide>
   ));
@@ -707,23 +708,41 @@ export default function ProductDetails() {
           >
             ثبت نظر شما
           </Typography>
-          <TextField
-            fullWidth
-            multiline
-            rows={4}
-            variant="outlined"
-            placeholder="نظر خود را بنویسید..."
-            value={newComment}
-            onChange={e => setNewComment(e.target.value)}
-            sx={{
-              backgroundColor: theme.palette.background.paper,
-              borderRadius: 2,
-              mb: 2,
-              "& .MuiInputBase-input": {
-                color: theme.palette.text.secondary
-              }
-            }}
-          />
+     <TextField
+  fullWidth
+  multiline
+  rows={4}
+  variant="outlined"
+  placeholder="نظر خود را بنویسید..."
+  value={newComment}
+  onChange={e => {
+    const value = e.target.value
+    if (value.length <= 150) {
+      setNewComment(value)
+    }
+  }}
+  sx={{
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: 2,
+    mb: 2,
+    "& .MuiInputBase-input": {
+      color: theme.palette.text.secondary
+    }
+  }}
+/>
+
+          <Typography
+  variant="caption"
+  sx={{
+    textAlign: 'right',
+    color: newComment.length > 140 ? 'error.main' : 'text.secondary',
+    display: 'block',
+    mt: -1.5,
+    mb: 1,
+  }}
+>
+  {newComment.length}/150
+</Typography>
           <Button
             type="submit"
             variant="contained"
