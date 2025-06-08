@@ -5,6 +5,11 @@ import {
   Button,
   IconButton,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddIcon from "@mui/icons-material/Add";
@@ -24,6 +29,8 @@ export default function Cart() {
   const [loading, setLoading] = useState(true);
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedVariantId, setSelectedVariantId] = useState(null);
 
   const fetchCart = async () => {
     try {
@@ -79,11 +86,18 @@ export default function Cart() {
   const handleRemove = (variantId) =>
     modifyCart(variantId, "PATCH", { productVariantId: variantId });
 
-  const handleDeleteItem = (variantId) =>
-    modifyCart(variantId, "PATCH", {
-      productVariantId: variantId,
+  const handleDeleteItem = (variantId) => {
+    setSelectedVariantId(variantId);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = () => {
+    modifyCart(selectedVariantId, "PATCH", {
+      productVariantId: selectedVariantId,
       removeAll: true,
     });
+    setOpenDeleteDialog(false);
+  };
 
   const handleClear = () => modifyCart(null, "DELETE");
 
@@ -140,9 +154,12 @@ export default function Cart() {
             <Typography
               fontWeight="bold"
               color={theme.palette.text.third}
-              sx={{cursor:'pointer',"&:hover":{
-                color:theme.palette.background.buttom
-              }}}
+              sx={{
+                cursor: "pointer",
+                "&:hover": {
+                  color: theme.palette.background.buttom,
+                },
+              }}
               onClick={() =>
                 navigate(
                   `/product-details/${
@@ -176,15 +193,15 @@ export default function Cart() {
             src={`${
               import.meta.env.VITE_BASE_URL + item.productId.imagesUrl[0]
             }`}
-            sx={{ width: 80, height: 80,cursor:'pointer' }}
+            sx={{ width: 80, height: 80, cursor: "pointer" }}
             alt={item.productId.title}
             onClick={() =>
-                navigate(
-                  `/product-details/${
-                    item.productId._id
-                  }/${item.productId.title.replaceAll(" ", "-")}`
-                )
-              }
+              navigate(
+                `/product-details/${
+                  item.productId._id
+                }/${item.productId.title.replaceAll(" ", "-")}`
+              )
+            }
           />
 
           <Box
@@ -264,6 +281,29 @@ export default function Cart() {
 
   return (
     <Box sx={{ minHeight: "80vh", mt: { xs: "80px", md: "130px" } }}>
+      {/* Delete Confirmation Dialog (only for complete removal) */}
+      <Dialog
+        open={openDeleteDialog}
+        onClose={() => setOpenDeleteDialog(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"حذف محصول"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            آیا از حذف این محصول از سبد خرید مطمئن هستید؟
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDeleteDialog(false)} color="primary">
+            انصراف
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            حذف
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Box
         sx={{
           height: 50,

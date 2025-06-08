@@ -373,7 +373,7 @@ export default function ProductDetails() {
           <Box
             sx={{
               display: "flex",
-              justifyContent:{xs:'center',md:'start'},
+              justifyContent:'center',
               gap: 1,
               overflowX: "auto",
               py: 1,
@@ -412,7 +412,6 @@ export default function ProductDetails() {
                   style={{
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover"
                   }}
                 />
               </Box>
