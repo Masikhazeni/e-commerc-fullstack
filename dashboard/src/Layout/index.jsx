@@ -34,7 +34,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row" style={{ direction: "rtl" }}>
+    <div className="min-h-screen bg-gray-100 flex flex-col mx-auto md:flex-row" style={{ direction: "rtl" }}>
       {/* Mobile Header */}
       <header className="md:hidden bg-white shadow-sm p-4 flex items-center justify-between">
         <button
@@ -48,7 +48,7 @@ const Layout = () => {
               <FiChevronLeft  size={20} />
           )}
         </button>
-        <h1 className="text-lg font-semibold text-gray-800">پنل مدیریت</h1>
+        <h1 className="text-lg font-semibold  text-gray-800">پنل مدیریت</h1>
       </header>
 
       {/* نوار کناری جمع شونده */}
@@ -299,14 +299,14 @@ const Layout = () => {
       {/* محتوای اصلی */}
       <main className="flex-1 p-4 md:p-8">
         {/* هدر دسکتاپ */}
-        <header className="hidden md:block bg-white shadow-sm p-4 mb-6 rounded-lg">
+        <header className="hidden md:block w-[100%] sm:w-[85%] md:w-[80%] lg:w-[100%] bg-white shadow-sm p-4 mb-6 rounded-lg">
           <h1 className="text-xl font-semibold text-gray-800">
             خوش آمدید، مدیر
           </h1>
         </header>
 
         {/* محفظه محتوا */}
-        <div className="bg-white shadow-sm rounded-lg p-4 md:p-6">
+        <div className="bg-white w-[100%] sm:w-[85%] md:w-[80%] lg:w-[100%] shadow-sm rounded-lg p-4 md:p-6">
           <Outlet />
         </div>
       </main>

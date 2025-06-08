@@ -1,17 +1,19 @@
-import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import React from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Address = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container mx-auto px-4 py-6" style={{ direction: 'rtl' }}>
-      <button 
-        onClick={() => navigate("create")}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors"
-      >
-        ایجاد آدرس جدید
-      </button>
+    <div className="container mx-auto  px-4 py-6" style={{ direction: "rtl" }}>
+      <div className="flex justify-start mb-4 ">
+        <button
+          onClick={() => navigate("create")}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md transition"
+        >
+          ایجاد آدرس جدید
+        </button>
+      </div>
       <Outlet />
     </div>
   );
