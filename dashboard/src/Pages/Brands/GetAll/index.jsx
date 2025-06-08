@@ -55,23 +55,45 @@ const GetAllBrands = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800 text-right">لیست برندها</h1>
-      
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="container mx-auto px-4 py-6" style={{ direction: "rtl" }}>
+      <h1 className="text-2xl font-bold mb-6 text-gray-800">لیست برندها</h1>
+
+      {/* نمایش موبایل (کارت‌ها) */}
+      <div className="block lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {brands.map((brand) => (
+          <div
+            key={brand._id}
+            onClick={() => navigate(`update/${brand._id}`)}
+            className="p-4 border rounded-lg shadow-sm bg-white cursor-pointer hover:bg-gray-50 transition-colors"
+          >
+            <div className="flex items-center gap-4">
+              {brand.image && (
+                <img
+                  src={import.meta.env.VITE_BASE_FILE + brand.image}
+                  alt={brand.name}
+                  className="w-16 h-16 object-contain rounded"
+                />
+              )}
+              <div>
+                <h3 className="font-medium text-gray-800">{brand.name}</h3>
+                <p className="text-sm text-gray-500 mt-1">
+                  {new Date(brand.createdAt).toLocaleDateString('fa-IR')}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* نمایش دسکتاپ (جدول) */}
+      <div className="hidden lg:block bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  تصویر
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  نام
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  تاریخ ایجاد
-                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">تصویر</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">نام</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">تاریخ ایجاد</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -79,21 +101,21 @@ const GetAllBrands = () => {
                 <tr
                   key={brand._id}
                   onClick={() => navigate(`update/${brand._id}`)}
-                  className="hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="hover:bg-gray-50 cursor-pointer transition-colors"
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     {brand.image && (
                       <img
                         src={import.meta.env.VITE_BASE_FILE + brand.image}
                         alt={brand.name}
-                        className="w-12 h-12 object-cover rounded"
+                        className="w-12 h-12 object-contain rounded"
                       />
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-right">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {brand.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {new Date(brand.createdAt).toLocaleDateString('fa-IR')}
                   </td>
                 </tr>
@@ -101,69 +123,50 @@ const GetAllBrands = () => {
             </tbody>
           </table>
         </div>
+      </div>
 
-        {/* Pagination Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-t border-gray-200 gap-4">
-          <div className="flex-1 flex justify-between sm:hidden">
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-            >
-              قبلی
-            </button>
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-              className="ml-3 inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-            >
-              بعدی
-            </button>
-          </div>
-          
-          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              <p className="text-sm text-gray-700">
-                نمایش <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> تا{" "}
-                <span className="font-medium">{Math.min(currentPage * itemsPerPage, totalCount)}</span> از{" "}
-                <span className="font-medium">{totalCount}</span> نتیجه
-              </p>
-              <select
-                value={itemsPerPage}
-                onChange={handleItemsPerPageChange}
-                className="border rounded-md px-2 py-1 text-sm"
-              >
-                <option value={10}>10 مورد در صفحه</option>
-                <option value={20}>20 مورد در صفحه</option>
-                <option value={50}>50 مورد در صفحه</option>
-              </select>
-            </div>
-            
-            <div className="flex gap-2">
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              >
-                قبلی
-              </button>
-              <span className="px-4 py-2 text-sm text-gray-700">
-                صفحه {currentPage} از {totalPages}
-              </span>
-              <button
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              >
-                بعدی
-              </button>
-            </div>
-          </div>
+      {/* Pagination */}
+      <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="flex items-center gap-2">
+          <select
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            className="border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+          >
+            <option value={10}>10 مورد در صفحه</option>
+            <option value={20}>20 مورد در صفحه</option>
+            <option value={50}>50 مورد در صفحه</option>
+          </select>
+          <p className="text-sm text-gray-700">
+            نمایش <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> تا{" "}
+            <span className="font-medium">{Math.min(currentPage * itemsPerPage, totalCount)}</span> از{" "}
+            <span className="font-medium">{totalCount}</span> نتیجه
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            قبلی
+          </button>
+          <span className="text-sm text-gray-700">
+            صفحه {currentPage} از {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            بعدی
+          </button>
         </div>
       </div>
 
       {brands.length === 0 && !loading && (
-        <div className="text-center text-gray-500 mt-8">برندی یافت نشد</div>
+        <div className="text-center py-8 text-gray-500">برندی یافت نشد</div>
       )}
     </div>
   );
