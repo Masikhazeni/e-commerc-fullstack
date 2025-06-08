@@ -87,7 +87,7 @@ export default function ProductDetails() {
     };
 
     fetchComments();
-  }, [id]);
+  }, [id,token]);
 
   useEffect(() => {
     const checkFavoriteStatus = async () => {
@@ -180,7 +180,7 @@ export default function ProductDetails() {
         },
         body: JSON.stringify({
           productId: id,
-          content: newComment
+          content: newComment,
         })
       });
 
@@ -242,13 +242,14 @@ export default function ProductDetails() {
     )
   ];
 
-  const commentItems = comments?.map((comment, index) => (
+  const commentItems = comments?.filter(comment => comment.isActive).map((comment, index) => (
     <SwiperSlide key={index}>
       <Comment
         username={comment?.userId?.username}
         date={comment.createdAt}
         content={comment.content}
         reply={comment?.reply}
+        iaActive={comment?.iaActive}
       />
     </SwiperSlide>
   ));

@@ -18,7 +18,7 @@ const commentSchema = new mongoose.Schema(
     },
     isActive: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     reply: {
       type: String,
