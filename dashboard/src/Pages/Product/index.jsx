@@ -5,10 +5,10 @@ const Product = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 sm:px-6 py-6">
       <button 
         onClick={() => navigate("create")}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors"
+        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors mb-4 sm:mb-6"
       >
         ایجاد محصول
       </button>

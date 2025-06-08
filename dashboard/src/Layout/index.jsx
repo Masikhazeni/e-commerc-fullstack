@@ -26,6 +26,7 @@ const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -33,18 +34,36 @@ const Layout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex" style={{ direction: "rtl" }}>
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row" style={{ direction: "rtl" }}>
+      {/* Mobile Header */}
+      <header className="md:hidden bg-white shadow-sm p-4 flex items-center justify-between">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="p-2  hover:bg-gray-100 rounded-lg"
+        >
+          {mobileMenuOpen ? (
+            <FiChevronRight className="mr-[50px]" size={20} />
+          
+          ) : (
+              <FiChevronLeft  size={20} />
+          )}
+        </button>
+        <h1 className="text-lg font-semibold text-gray-800">پنل مدیریت</h1>
+      </header>
+
       {/* نوار کناری جمع شونده */}
       <aside
         className={`${
-          isCollapsed ? "w-16" : "w-64"
-        } bg-white shadow-lg p-4 transition-all duration-200 flex flex-col`}
+          mobileMenuOpen ? "block" : "hidden"
+        } md:block ${
+          isCollapsed ? "w-16" : "w-56 md:w-64"
+        } bg-white shadow-lg p-4 transition-all  duration-500 flex flex-col fixed md:static h-full z-10`}
       >
         <div className="flex-1">
           {/* دکمه جمع کردن/باز کردن */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="w-full mb-6 p-2 hover:bg-gray-100 rounded-lg flex items-center justify-center"
+            className="hidden md:flex w-full mb-6 p-2 hover:bg-gray-100 rounded-lg items-center justify-center"
           >
             {isCollapsed ? (
               <FiChevronLeft size={24} />
@@ -55,7 +74,7 @@ const Layout = () => {
 
           {/* عنوان نوار کناری */}
           <div
-            className={`text-2xl font-bold text-gray-800 mb-8 ${
+            className={`text-xl md:text-2xl font-bold text-gray-800 mb-8 ${
               isCollapsed ? "text-center" : "px-2"
             }`}
           >
@@ -69,6 +88,7 @@ const Layout = () => {
                 <Link
                   to="/"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiHome className="flex-shrink-0" size={20} />
                   <span
@@ -84,6 +104,7 @@ const Layout = () => {
                 <Link
                   to="/slider"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiSliders className="flex-shrink-0" size={20} />
                   <span
@@ -91,7 +112,7 @@ const Layout = () => {
                       isCollapsed ? "opacity-0 w-0 absolute" : "opacity-100"
                     }`}
                   >
-                    اسلایدرها{" "}
+                    اسلایدرها
                   </span>
                 </Link>
               </li>
@@ -99,6 +120,7 @@ const Layout = () => {
                 <Link
                   to="/category"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiList className="flex-shrink-0" size={20} />
                   <span
@@ -114,6 +136,7 @@ const Layout = () => {
                 <Link
                   to="/brand"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiServer className="flex-shrink-0" size={20} />
                   <span
@@ -129,6 +152,7 @@ const Layout = () => {
                 <Link
                   to="/user"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiUser className="flex-shrink-0" size={20} />
                   <span
@@ -144,6 +168,7 @@ const Layout = () => {
                 <Link
                   to="/address"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiMap className="flex-shrink-0" size={20} />
                   <span
@@ -159,6 +184,7 @@ const Layout = () => {
                 <Link
                   to="/product"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiBox className="flex-shrink-0" size={20} />
                   <span
@@ -174,6 +200,7 @@ const Layout = () => {
                 <Link
                   to="/variant"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiCodepen className="flex-shrink-0" size={20} />
                   <span
@@ -189,6 +216,7 @@ const Layout = () => {
                 <Link
                   to="/product-variant"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiCodesandbox className="flex-shrink-0" size={20} />
                   <span
@@ -204,6 +232,7 @@ const Layout = () => {
                 <Link
                   to="/discount-code"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiPercent className="flex-shrink-0" size={20} />
                   <span
@@ -219,6 +248,7 @@ const Layout = () => {
                 <Link
                   to="/comments"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiMessageSquare className="flex-shrink-0" size={20} />
                   <span
@@ -234,6 +264,7 @@ const Layout = () => {
                 <Link
                   to="/order"
                   className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiShoppingCart className="flex-shrink-0" size={20} />
                   <span
@@ -266,26 +297,16 @@ const Layout = () => {
       </aside>
 
       {/* محتوای اصلی */}
-      <main className="flex-1 p-8">
-        {/* هدر با دکمه جمع کردن (برای موبایل) */}
-        <header className="bg-white shadow-sm p-4 mb-8 rounded-lg flex items-center justify-between">
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
-          >
-            {isCollapsed ? (
-              <FiChevronLeft size={20} />
-            ) : (
-              <FiChevronRight size={20} />
-            )}
-          </button>
+      <main className="flex-1 p-4 md:p-8">
+        {/* هدر دسکتاپ */}
+        <header className="hidden md:block bg-white shadow-sm p-4 mb-6 rounded-lg">
           <h1 className="text-xl font-semibold text-gray-800">
             خوش آمدید، مدیر
           </h1>
         </header>
 
         {/* محفظه محتوا */}
-        <div className="bg-white shadow-sm rounded-lg p-6">
+        <div className="bg-white shadow-sm rounded-lg p-4 md:p-6">
           <Outlet />
         </div>
       </main>
