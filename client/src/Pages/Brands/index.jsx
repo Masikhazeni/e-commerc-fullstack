@@ -310,6 +310,7 @@ export default function Brands() {
             color: theme.palette.text.secondary,
             fontSize: "16px",
             lineHeight: "50px",
+            mr:{xs:'5%',md:'0'}
 
           }}
         >

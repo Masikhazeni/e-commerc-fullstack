@@ -307,6 +307,7 @@ export default function Navbar() {
         width: "100%",
         height: { sm: "80px", md: "130px" },
         direction: "rtl",
+        borderBottom:'.5px solid white'
       }}
     >
       {isMobile ? (
