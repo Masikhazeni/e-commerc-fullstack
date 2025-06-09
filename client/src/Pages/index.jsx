@@ -9,6 +9,5 @@ import ProductsDetails from "./ProductsDetails"
 import Cart from "./Cart"
 import Profile from "./Profile"
 import NotFound from "./NotFound"
-import About from "./About"
 import Favorite from "./Favorites"
-export {Favorite,Authorization,Auth,CheckOtp,CheckPass,ForgetPass,Home,Products,ProductsDetails,Profile,Cart,NotFound,About}
+export {Favorite,Authorization,Auth,CheckOtp,CheckPass,ForgetPass,Home,Products,ProductsDetails,Profile,Cart,NotFound}

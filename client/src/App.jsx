@@ -16,8 +16,7 @@ import {
   ProductsDetails,
   Profile,
   Cart,
-  NotFound,
-  About,Favorite,
+  NotFound,Favorite,
   CheckPass,
  
 } from "./Pages";
@@ -55,7 +54,6 @@ export default function App() {
       <Box dir="rtl">
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
           <Route
             path="/authorization"
             element={token ? <Navigate to="/" /> : <Authorization />}
