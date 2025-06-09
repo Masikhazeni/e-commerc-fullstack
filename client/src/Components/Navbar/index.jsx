@@ -153,7 +153,9 @@ export default function Navbar() {
       title={e.name}
       id={e._id}
       img={e.image}
-      onClick={() => setSearchOpen(false)}
+      onClick={() => {setSearchOpen(false)}
+               
+      }
     />
   ));
 
@@ -329,6 +331,129 @@ export default function Navbar() {
             >
               رایاپلاس
             </Typography>
+             <Box
+              ref={searchRef}
+              sx={{
+                width: "25%",
+                height: "50px",
+                backgroundColor: theme.palette.background.default,
+                display: "flex",
+                alignItems: "center",
+                borderRadius: "10px",
+                mx: "5%",
+                flex: "1",
+                position: "relative",
+                border: `1px solid ${theme.palette.primary.main}`
+              }}
+            >
+              <SearchIcon
+                sx={{
+                  color: theme.palette.primary.main,
+                  mr: 1,
+                  fontSize: "1.5rem"
+                }}
+              />
+              <input
+                type="text"
+                placeholder="جستجو..."
+                style={{
+                  width: "90%",
+                  outline: "none",
+                  border: "none",
+                  backgroundColor: "transparent",
+                  color: theme.palette.text.secondary,
+                  fontSize: "0.9rem",
+                }}
+                value={searchInp}
+                onChange={handleSearch}
+                onFocus={() => setSearchOpen(true)}
+              />
+              
+              {searchOpen && searchInp && (
+                <Stack
+                  sx={{
+                    position: "absolute",
+                    width: "100%",
+                    maxHeight: "400px",
+                    borderRadius: "0 0 10px 10px",
+                    overflowY: "auto",
+                    backgroundColor: theme.palette.background.paper,
+                    zIndex: "1200",
+                    top: "100%",
+                    left: 0,
+                    boxShadow: theme.shadows[3],
+                    border: `1px solid ${theme.palette.primary.main}`,
+                  }}
+                >
+                  {catItems?.length > 0 && (
+                    <>
+                      <Typography 
+                        sx={{
+                          p: 1,
+                          color: theme.palette.primary.main,
+                          fontWeight: "bold",
+                          fontSize: "0.9rem",
+                          textAlign: "right"
+                        }}
+                      >
+                        دسته بندی ها
+                      </Typography>
+                      <Divider sx={{ borderColor: theme.palette.primary.main }} />
+                      {catItems}
+                    </>
+                  )}
+                  
+                  {brandItems?.length > 0 && (
+                    <>
+                      <Typography 
+                        sx={{
+                          p: 1,
+                          color: theme.palette.primary.main,
+                          fontWeight: "bold",
+                          fontSize: "0.9rem",
+                          textAlign: "right"
+                        }}
+                      >
+                        برند ها
+                      </Typography>
+                      <Divider sx={{ borderColor: theme.palette.primary.main }} />
+                      {brandItems}
+                    </>
+                  )}
+                  
+                  {proItems?.length > 0 && (
+                    <>
+                      <Typography 
+                        sx={{
+                          p: 1,
+                          color: theme.palette.primary.main,
+                          fontWeight: "bold",
+                          fontSize: "0.9rem",
+                          textAlign: "right"
+                        }}
+                      >
+                        محصولات
+                      </Typography>
+                      <Divider sx={{ borderColor: theme.palette.primary.main }} />
+                      {proItems}
+                    </>
+                  )}
+                  
+                  {catItems?.length === 0 && brandItems?.length === 0 && proItems?.length === 0 && (
+                    <Typography 
+                      sx={{
+                        p: 2,
+                        color: theme.palette.text.third,
+                        textAlign: "center",
+                        fontSize: "0.9rem"
+                      }}
+                    >
+                      نتیجه‌ای یافت نشد
+                    </Typography>
+                  )}
+                </Stack>
+              )}
+            </Box>
 
             <Box>
               <FormControlLabel
@@ -371,132 +496,7 @@ export default function Navbar() {
                 <CloseIcon />
               </IconButton>
             </Box>
-
-            <Box
-              ref={searchRef}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                
-                backgroundColor: theme.palette.background.paper,
-                borderRadius: 1,
-                px: 1,
-                my: 2,
-                border: `1px solid ${theme.palette.primary.main}`
-              }}
-            >
-              <SearchIcon sx={{ 
-                color: theme.palette.primary.main,
-                fontSize: "1.3rem"
-              }} />
-              <TextField
-                variant="standard"
-                placeholder="جستجو..."
-                fullWidth
-                InputProps={{ 
-                  disableUnderline: true,
-                  sx: {
-                    color: theme.palette.text.secondary,
-                    fontSize: "0.9rem",
-                    "&::placeholder": {
-                      color: theme.palette.text.third,
-                      opacity: 0.7
-                    }
-                  }
-                }}
-                sx={{ 
-                  color: theme.palette.text.secondary,
-                  p: 1
-                }}
-                value={searchInp}
-                onChange={handleSearch}
-                onFocus={() => setSearchOpen(true)}
-              />
-            </Box>
-
-            {searchOpen && searchInp && (
-              <Box
-                sx={{
-                  position: "fixed",
-                  width:'80%',
-                  top: "120px",
-                  left: 0,
-                  bottom: 0,
-                  backgroundColor: theme.palette.background.paper,
-                  zIndex: 1999,
-                  overflowY: "auto",
-                  p: 2,
-                  borderTop: `2px solid ${theme.palette.primary.main}`
-                }}
-              >
-                {catItems?.length > 0 && (
-                  <>
-                    <Typography 
-                      sx={{
-                        color: theme.palette.primary.main,
-                        fontWeight: "bold",
-                        fontSize: "0.9rem",
-                        mb: 1
-                      }}
-                    >
-                      دسته بندی ها
-                    </Typography>
-                    <Divider sx={{ borderColor: theme.palette.primary.main, mb: 1 }} />
-                    <Stack spacing={1}>{catItems}</Stack>
-                  </>
-                )}
-                
-                {brandItems?.length > 0 && (
-                  <>
-                    <Typography 
-                      sx={{
-                        color: theme.palette.primary.main,
-                        fontWeight: "bold",
-                        fontSize: "0.9rem",
-                        mt: 2,
-                        mb: 1
-                      }}
-                    >
-                      برند ها
-                    </Typography>
-                    <Divider sx={{ borderColor: theme.palette.primary.main, mb: 1 }} />
-                    <Stack spacing={1}>{brandItems}</Stack>
-                  </>
-                )}
-                
-                {proItems?.length > 0 && (
-                  <>
-                    <Typography 
-                      sx={{
-                        color: theme.palette.primary.main,
-                        fontWeight: "bold",
-                        fontSize: "0.9rem",
-                        mt: 2,
-                        mb: 1
-                      }}
-                    >
-                      محصولات
-                    </Typography>
-                    <Divider sx={{ borderColor: theme.palette.primary.main, mb: 1 }} />
-                    <Stack spacing={1}>{proItems}</Stack>
-                  </>
-                )}
-                
-                {catItems?.length === 0 && brandItems?.length === 0 && proItems?.length === 0 && (
-                  <Typography 
-                    sx={{
-                      color: theme.palette.text.third,
-                      textAlign: "center",
-                      p: 2,
-                      fontSize: "0.9rem"
-                    }}
-                  >
-                    نتیجه‌ای یافت نشد
-                  </Typography>
-                )}
-              </Box>
-            )}
-
+            <Divider/>
             <Stack spacing={2} mt={2}>
               <Button
                 sx={{

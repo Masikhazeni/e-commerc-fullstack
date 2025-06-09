@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, Paper } from "@mui/material";
+import { Box, Typography, Button, Paper, useTheme } from "@mui/material";
 import OtpInput from "./OtpInput";
 import fetchData from "../../../Utils/fetchData";
 import { useDispatch } from "react-redux";
@@ -12,26 +12,8 @@ const CheckOtp = () => {
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(120);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
-
-  // const handleOtpComplete = async (code) => {
-  //   const phoneNumber = localStorage.getItem("phoneNumber");
-  //   const newAccount = localStorage.getItem("newAccount");
-  //   const res = await fetchData("auth/otp", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ code, newAccount, phoneNumber }),
-  //   });
-  //   if (res.success) {
-  //     dispatch(login({ user: res?.data?.user, token: res?.data?.token }));
-  //     // localStorage.setItem("token", res.data.token);
-  //     // localStorage.setItem("user", JSON.stringify(res.data.user));
-  //     notify(res.message, "success");
-  //     navigate("/");
-  //   } else {
-  //     notify(res.message, "error");
-  //   }
-  // };
-
+  const theme=useTheme()
+  
   const handleOtpComplete = async (code) => {
   const phoneNumber = localStorage.getItem("phoneNumber");
   const newAccount = localStorage.getItem("newAccount");
@@ -106,7 +88,7 @@ const CheckOtp = () => {
         elevation={3}
         sx={{ p: 4, borderRadius: 4, maxWidth: 400, width: "100%" }}
       >
-        <Typography variant="h5" align="center" gutterBottom>
+        <Typography variant="h5"color={theme.palette.primary.main} align="center" gutterBottom>
           وارد کردن کد تایید
         </Typography>
 

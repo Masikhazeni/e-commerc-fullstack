@@ -5,13 +5,16 @@ const DiscountCode = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <button
-        onClick={() => navigate("create")}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-md transition-colors mb-6"
-      >
-        افزودن کد تخفیف جدید
-      </button>
+    <div className="container mx-auto px-4 py-6" style={{ direction: "rtl" }}>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">مدیریت کدهای تخفیف</h1>
+        <button
+          onClick={() => navigate("create")}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-md transition-colors shadow-sm hover:shadow-md whitespace-nowrap"
+        >
+          + افزودن کد تخفیف جدید
+        </button>
+      </div>
       <Outlet />
     </div>
   );
