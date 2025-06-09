@@ -79,8 +79,10 @@ const GetAllVariant = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800 text-right">لیست متغیرها</h1>
+    <div className="container mx-auto px-4 py-8" dir="rtl">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 text-right">
+        لیست متغیرها
+      </h1>
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 text-right">
@@ -90,7 +92,7 @@ const GetAllVariant = () => {
                   <th
                     key={field}
                     onClick={() => handleSort(field)}
-                    className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer select-none"
+                    className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer text-right"
                   >
                     <div className="flex items-center justify-end gap-1">
                       {field === "createdAt"
@@ -111,12 +113,20 @@ const GetAllVariant = () => {
                   onClick={() => navigate(`update/${variant._id}`)}
                   className="hover:bg-gray-50 transition-colors cursor-pointer"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">{variant.type === "size" ? "اندازه" : "رنگ"}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{variant.value}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex justify-end">
+                      {variant.type === "size" ? "اندازه" : "رنگ"}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex justify-end">{variant.value}</div>
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {variant.createdAt
-                      ? new Date(variant.createdAt).toLocaleDateString("fa-IR")
-                      : "-"}
+                    <div className="flex justify-end">
+                      {variant.createdAt
+                        ? new Date(variant.createdAt).toLocaleDateString("fa-IR")
+                        : "-"}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -178,4 +188,5 @@ const GetAllVariant = () => {
 };
 
 export default GetAllVariant;
+
 
