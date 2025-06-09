@@ -53,7 +53,7 @@ export default function Product({
 
   const handleToggleFavorite = async () => {
     if (!token) {
-      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "warning");
+      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "error");
       return;
     }
 

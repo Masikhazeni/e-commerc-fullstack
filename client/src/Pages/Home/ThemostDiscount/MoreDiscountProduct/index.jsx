@@ -41,7 +41,7 @@ export default function MoreDiscountProduct({ title, image, id, variantData }) {
 
   const handleToggleFavorite = async () => {
     if (!token) {
-      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "warning");
+      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "error");
       return;
     }
 

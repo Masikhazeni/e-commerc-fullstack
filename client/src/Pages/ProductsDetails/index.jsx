@@ -134,7 +134,7 @@ export default function ProductDetails() {
 
   const handleAddToCart = async () => {
     if (!token) {
-      notify("برای افزودن به سبد خرید ابتدا وارد شوید", "warning");
+      notify("برای افزودن به سبد خرید ابتدا وارد شوید", "error");
       return;
     }
 
@@ -199,7 +199,7 @@ export default function ProductDetails() {
 
   const handleToggleFavorite = async () => {
     if (!token) {
-      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "warning");
+      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "error");
       return;
     }
 

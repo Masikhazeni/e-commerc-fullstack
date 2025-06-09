@@ -29,7 +29,7 @@ export default function MainSlider() {
   }, []);
 
   return (
-    <Box sx={{ width: "100%", height: "100vh", position: "relative",mt:{xs:'90px',md:'130px'} }}>
+    <Box sx={{ width: "100%", height: "100vh", position: "relative",mt:{xs:'80px',md:'120px'} }}>
       <Swiper
         spaceBetween={0}
         effect="fade"

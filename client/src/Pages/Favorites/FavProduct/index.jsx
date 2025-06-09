@@ -29,7 +29,7 @@ export default function FavProduct({ title, image, id, variantId, onRemove }) {
 
   const handleToggleFavorite = async () => {
     if (!token) {
-      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "warning");
+      notify("برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید", "error");
       return;
     }
 
